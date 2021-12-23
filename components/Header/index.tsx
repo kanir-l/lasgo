@@ -15,10 +15,14 @@ const Header: FC = () => {
                 </Link>
             </div>
             <div className={style.icons}>
-                <Image src="/home-icon.png" alt="Logo" width="26"
-                height="26" />
-                <Image src="/user-icon.png" alt="Logo" width="26"
-                height="26" />
+                <Link href={`/home`} passHref>
+                    <Image src="/home-icon.png" alt="Logo" width="26"
+                    height="26" />
+                </Link>
+                <Link href={`/profiles`} passHref>
+                    <Image src="/user-icon.png" alt="Logo" width="26"
+                    height="26" />
+                </Link>
             </div>
         </div> 
     ) 

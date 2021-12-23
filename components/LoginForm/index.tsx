@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react'
-import { userContacts } from '../../interfaces/contacts'
+import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
 import style from './loginform.module.scss'
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const LoginForm: FC<Props> = ({ loginDetails }) => {
-    const [form, setForm] = useState<userContacts>({
+    const [form, setForm] = useState<ProfileInterface>({
         firstName: "",
         lastName: "",
         userName: "",

@@ -1,23 +1,36 @@
-import type { NextPage } from 'next'
-import Image from 'next/image'
+import type { GetServerSideProps, NextPage } from 'next'
 import React from 'react'
-import Link from 'next/link'
 // Components
-
+import Header from '../../components/Header'
+import Profile from '../../components/Profile'
+// Interfaces
+import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
 import styles from '../../styles/Home.module.css'
-import Header from '../../components/Header'
-import UserProfile from '../../components/UserProfile'
 
+interface Props {
+    profiles: ProfileInterface[]
+}
 
-const user: NextPage = () => {
-    
+const user: NextPage<Props> = ({ profiles }) => {
     return (
         <div className={styles.pageusercontainer}>
             <Header />
-            <UserProfile /> 
+            <Profile profile={profiles[0]} /> 
         </div>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const res = await fetch(`http://localhost:3000/api/profiles`)
+    const data = await res.json()
+    const profiles = data.data
+
+    return {
+        props: {
+            profiles: profiles
+        }
+    }
 }
 
 export default user

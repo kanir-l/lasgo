@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 // Interfaces
-import { userContacts } from '../../interfaces/contacts'
+import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
 import style from './signupform.module.scss'
 
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const SignupForm: FC<Props> = ({ formDetails }) => {
-    const [form, setForm] = useState<userContacts>({
+    const [form, setForm] = useState<ProfileInterface>({
         firstName: "",
         lastName: "",
         userName: "",

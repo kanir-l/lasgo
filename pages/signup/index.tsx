@@ -5,7 +5,6 @@ import Link from 'next/link'
 import Head from 'next/head'
 // Components
 import SignupForm from '../../components/SignupForm'
-import Button from '../../components/Button'
 // Styles
 import styles from '../../styles/Home.module.css'
 
