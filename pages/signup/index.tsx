@@ -1,17 +1,26 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
+import router from 'next/router'
 // Components
 import SignupForm from '../../components/SignupForm'
 // Styles
 import styles from '../../styles/Home.module.css'
+// Services
+import { createProfileFromSignUp } from '../../services/database'
 
 
 const Signup: NextPage = () => {
-    const createUser = (firstName: string, lastName: string, userName: string, email: string, password: string) => {
-        console.log(firstName, lastName, userName, email, password)
+    const createUser = async (firstName: string, lastName: string, userName: string, email: string, password: string, accountCreated: Date) => {
+        try {
+            await createProfileFromSignUp(firstName, lastName, userName, email, password, accountCreated)
+            router.push('/home')
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 
     return (

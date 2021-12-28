@@ -3,6 +3,8 @@ import React from 'react'
 // Components
 import Header from '../../components/Header'
 import Profile from '../../components/Profile'
+// Services
+import { renderProfileByUserName } from '../../services/database'
 // Interfaces
 import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
@@ -16,19 +18,20 @@ const user: NextPage<Props> = ({ user }) => {
     return (
         <div className={styles.pageusercontainer}>
             <Header />
-            <Profile profile={user} /> 
+            {user 
+            ?<Profile profile={user} />
+            :null
+            } 
         </div>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const queryUser = String(context.query.profiles)
+    const queryUser = String(context.query.profile)
 
-    const res = await fetch(`http://localhost:3000/api/${queryUser}`)
+    const res = await renderProfileByUserName(queryUser)
     const data = await res.json()
     const profile = data.data
-
-    console.log(profile)
  
     return {
         props: {

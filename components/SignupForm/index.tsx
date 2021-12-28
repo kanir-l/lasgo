@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 // Interfaces
-import { ProfileInterface } from '../../interfaces/Profile'
+import { SignUpInterface } from '../../interfaces/Profile'
 // Styles
 import style from './signupform.module.scss'
 
@@ -10,17 +10,19 @@ interface Props {
         lastName: string,
         userName: string,
         email: string,
-        password: string
+        password: string,
+        accountCreated: Date
     ): void
 }
 
-const SignupForm: FC<Props> = ({ formDetails }) => {
-    const [form, setForm] = useState<ProfileInterface>({
+const SignupForm: FC<Props> = ( {formDetails} ) => {
+    const [form, setForm] = useState<SignUpInterface>({
         firstName: "",
         lastName: "",
         userName: "",
         email: "",
-        password: ""
+        password: "",
+        accountCreated: new Date()
     })
 
     const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +32,7 @@ const SignupForm: FC<Props> = ({ formDetails }) => {
 
     const saveInputs = (e: FormEvent) => {
         e.preventDefault()
-        formDetails(form.firstName, form.lastName, form.userName, form.email, form.password)
+        formDetails(form.firstName, form.lastName, form.userName, form.email, form.password, new Date())
     }
  
     return (
