@@ -11,8 +11,8 @@ interface Props {
 
 const Profile: FC<Props> = ( {profile} ) => {
     const countChallenges = profile.myChallenges.length
-    const countAcknowledgements = profile.myAcknowledgements.length
-    
+    const countAcknowledgements = profile.myAcknowledgements.length 
+   
     return (
         <div className={style.profile}>
             <div className={style.box}>
@@ -21,8 +21,12 @@ const Profile: FC<Props> = ( {profile} ) => {
             <div className={style.info}>
                 <h1>{profile.userName}</h1>
                 <div className={style.activities}>
+                    {!profile.myChallenges ? 0 : 
                     <p>{countChallenges} Challenges</p>
+                    }
+                    {!profile.myAcknowledgements ? 0 : 
                     <p>{countAcknowledgements} Acknowledgements</p>
+                    } 
                 </div>
                 <p>{profile.firstName}</p>
                 <p>{profile.about}</p>

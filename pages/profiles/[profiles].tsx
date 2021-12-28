@@ -9,26 +9,30 @@ import { ProfileInterface } from '../../interfaces/Profile'
 import styles from '../../styles/Home.module.css'
 
 interface Props {
-    profiles: ProfileInterface[]
+    user: ProfileInterface
 }
 
-const user: NextPage<Props> = ({ profiles }) => {
+const user: NextPage<Props> = ({ user }) => {
     return (
         <div className={styles.pageusercontainer}>
             <Header />
-            <Profile profile={profiles[0]} /> 
+            <Profile profile={user} /> 
         </div>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const res = await fetch(`http://localhost:3000/api/profiles`)
-    const data = await res.json()
-    const profiles = data.data
+    const queryUser = String(context.query.profiles)
 
+    const res = await fetch(`http://localhost:3000/api/${queryUser}`)
+    const data = await res.json()
+    const profile = data.data
+
+    console.log(profile)
+ 
     return {
         props: {
-            profiles: profiles
+            user: profile[0]
         }
     }
 }
