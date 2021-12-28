@@ -23,6 +23,9 @@ const Header: FC = () => {
                     <Image src="/user-icon.png" alt="Logo" width="26"
                     height="26" />
                 </Link>
+                <Link href={`/logout`} passHref>
+                    <p className={style.logout}>Logout</p>
+                </Link>
             </div>
         </div> 
     ) 
