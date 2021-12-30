@@ -1,17 +1,22 @@
 import React, { FC } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
 // Styles
 import style from './profile.module.scss'
 import { ProfileInterface } from '../../interfaces/Profile'
 
+
 interface Props {
-    profile: ProfileInterface
+    profile: ProfileInterface,
+    removeProfile(profileId: number): void
 }
 
-const Profile: FC<Props> = ( {profile} ) => {
-    const countChallenges = profile.myChallenges.length
+const Profile: FC<Props> = ( {profile, removeProfile} ) => {
+
+    const countChallenges = profile.myChallenges.length 
     const countAcknowledgements = profile.myAcknowledgements.length 
+ 
+    const handleRemove = (profileId: number) => {
+        removeProfile(profileId)
+    }
    
     return (
         <div className={style.profile}>
@@ -31,6 +36,7 @@ const Profile: FC<Props> = ( {profile} ) => {
                 <p>{profile.firstName}</p>
                 <p>{profile.about}</p>
             </div>
+            <button className={style.button} onClick={() => handleRemove(profile._id)}>Delete</button>
         </div> 
     ) 
 }

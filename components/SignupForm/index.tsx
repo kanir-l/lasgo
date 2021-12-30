@@ -13,9 +13,26 @@ interface Props {
         password: string,
         accountCreated: Date
     ): void
+    errors: {
+        firstName: {
+            message: string,
+        },
+        lastName: {
+            message: string,
+        },
+        userName: {
+            message: string,
+        },
+        email: {
+            message: string,
+        },
+        password: {
+            message: string,
+        }
+    }
 }
 
-const SignupForm: FC<Props> = ( {formDetails} ) => {
+const SignupForm: FC<Props> = ( {formDetails, errors} ) => {
     const [form, setForm] = useState<SignUpInterface>({
         firstName: "",
         lastName: "",
@@ -50,6 +67,7 @@ const SignupForm: FC<Props> = ( {formDetails} ) => {
                     onChange={handleInputs}
                     name="firstName"
                 />
+                {errors.firstName && <p className='error'>{errors.firstName.message}</p>}
                 <input 
                     className={style.input}
                     id="lastname" 
@@ -61,6 +79,7 @@ const SignupForm: FC<Props> = ( {formDetails} ) => {
                     onChange={handleInputs}
                     name="lastName"
                 />
+                {errors.lastName && <p className='error'>{errors.lastName.message}</p>}
                 <input 
                     className={style.input}
                     id="username" 
@@ -72,6 +91,7 @@ const SignupForm: FC<Props> = ( {formDetails} ) => {
                     onChange={handleInputs}
                     name="userName"
                 />
+                {errors.userName && <p className='error'>{errors.userName.message}</p>}
                 <input 
                     className={style.input}
                     id="email" 
@@ -83,6 +103,7 @@ const SignupForm: FC<Props> = ( {formDetails} ) => {
                     onChange={handleInputs}
                     name="email"
                 />
+                {errors.email && <p className='error'>{errors.email.message}</p>}
                 <input 
                     className={style.input}
                     id="password" 
@@ -94,6 +115,7 @@ const SignupForm: FC<Props> = ( {formDetails} ) => {
                     onChange={handleInputs}
                     name="password"
                 />
+                {errors.password && <p className='error'>{errors.password.message}</p>}
                 <button className={style.button} type="submit" onClick={saveInputs}>Register</button>
             </form>
          </div>

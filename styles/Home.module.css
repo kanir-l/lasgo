@@ -70,5 +70,11 @@
   align-items: center;
 }
 
+/* Challenges / Acknowledgements */
+.subcontainer li {
+  list-style: none;
+  display: inline-block;
+}
+
 
 

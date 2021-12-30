@@ -26,7 +26,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       catch (error) {
         res.status(400).json( {error: "Failed getting the profile"} )
       } 
-    
     break
     default: 
     res.status(400).json( {error: "Failed"} )
