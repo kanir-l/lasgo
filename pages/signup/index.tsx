@@ -14,21 +14,11 @@ import { createProfileFromSignUp } from '../../services/database'
 
 const Signup: NextPage = () => {
     const [errors, setErrors] = useState({
-        firstName: {
-            message: ""
-        },
-        lastName: {
-            message: ""
-        },
-        userName: {
-            message: ""
-        },
-        email: {
-            message: ""
-        },
-        password: {
-            message: ""
-        }
+        firstName: { message: "" },
+        lastName: { message: "" },
+        userName: { message: "" },
+        email: { message: "" },
+        password: { message: "" }
     })
 
     const createUser = async (firstName: string, lastName: string, userName: string, email: string, password: string, accountCreated: Date) => {

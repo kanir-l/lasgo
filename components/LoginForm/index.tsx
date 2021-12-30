@@ -30,7 +30,7 @@ const LoginForm: FC<Props> = ({ loginDetails }) => {
     }
  
     return (
-        <div className={style.container}>
+        <div className={style.login}>
             <div className={style.h1}>Log In</div>
             <form className={style.form} onSubmit={saveInputs}>
                 <input 
