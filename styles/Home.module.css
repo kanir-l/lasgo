@@ -52,7 +52,6 @@
     width: 59.3125rem;
     font-size: 1.6rem;
     line-height: 4.125rem;
-   
   }
   
   .buttons {
@@ -61,7 +60,7 @@
 }
 
 /* Users */
-.pageusercontainer {
+.profilepagecontainer {
   background: #ffffff;
   min-height: 100vh;
   width: 100%;
@@ -71,10 +70,32 @@
 }
 
 /* Challenges / Acknowledgements */
-.subcontainer li {
+.topiccontainer {
+  width: 80%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.topiccontainer ul {
+  padding: 0;
+}
+
+.topiccontainer li {
+  color: rgb(209, 209, 209);
   list-style: none;
   display: inline-block;
+  margin-right: 1.6em;
+  cursor: pointer;
 }
+
+.challengespage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+
+
 
 
 

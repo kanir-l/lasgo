@@ -14,21 +14,11 @@ interface Props {
         accountCreated: Date
     ): void
     errors: {
-        firstName: {
-            message: string,
-        },
-        lastName: {
-            message: string,
-        },
-        userName: {
-            message: string,
-        },
-        email: {
-            message: string,
-        },
-        password: {
-            message: string,
-        }
+        firstName: { message: string },
+        lastName: { message: string },
+        userName: { message: string },
+        email: { message: string },
+        password: { message: string }
     }
 }
 
@@ -53,7 +43,7 @@ const SignupForm: FC<Props> = ( {formDetails, errors} ) => {
     }
  
     return (
-        <div className={style.container}>
+        <div className={style.signup}>
             <div className={style.h1}>Sign up</div>
             <form className={style.form} onSubmit={saveInputs}>
                 <input 
