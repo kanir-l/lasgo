@@ -1,4 +1,4 @@
-export interface SignUpInterface {
+export interface SignUpInterface { 
     firstName: string,
     lastName: string,
     userName: string,
@@ -8,15 +8,32 @@ export interface SignUpInterface {
 }
 
 export interface ProfileInterface {
+    _id: number,
     firstName: string,
     lastName: string,
     userName: string,
     email: string,
     password: string,
     accountCreated: Date,
-    image: string,
     about: string,
+    image: string,
     tokenExpiration: Date,
-    myChallenges: [],
-    myAcknowledgements: []
+    myChallenges: [
+        ThisAndThatInterface
+    ],
+    myAcknowledgements: [
+        PicksInterface
+    ]
+}
+
+export interface PicksInterface {
+    thisAndthat: {
+        thisAndthat: ThisAndThatInterface
+    }
+    picked: string
+}
+
+export interface ThisAndThatInterface {
+    this: string,
+    that: string
 }

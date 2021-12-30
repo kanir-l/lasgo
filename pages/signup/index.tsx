@@ -13,10 +13,37 @@ import { createProfileFromSignUp } from '../../services/database'
 
 
 const Signup: NextPage = () => {
+    const [errors, setErrors] = useState({
+        firstName: {
+            message: ""
+        },
+        lastName: {
+            message: ""
+        },
+        userName: {
+            message: ""
+        },
+        email: {
+            message: ""
+        },
+        password: {
+            message: ""
+        }
+    })
+
     const createUser = async (firstName: string, lastName: string, userName: string, email: string, password: string, accountCreated: Date) => {
         try {
-            await createProfileFromSignUp(firstName, lastName, userName, email, password, accountCreated)
-            router.push('/home')
+            const signUp = await createProfileFromSignUp(firstName, lastName, userName, email, password, accountCreated)
+            if(signUp?.ok) {
+                router.push(`/profile/${userName}`)
+            } else {
+                if(signUp){
+                    const response = await signUp.json();
+                    setErrors(response.error.errors)
+                } else {
+                    throw "Something went wrong that we couldn't recover from."
+                }
+            }
         }
         catch (error) {
             console.log(error)
@@ -38,7 +65,7 @@ const Signup: NextPage = () => {
                 </Link>
             </div>
             <div className={styles.homecontainer}>
-                <SignupForm formDetails={createUser}/>
+                <SignupForm formDetails={createUser} errors={errors} />
             </div>
         </div>
     )
