@@ -41,3 +41,20 @@ export async function deleteUserProfile(userId: number) {
         console.log("Could not delete the user from the database")
     }
 }
+
+export async function deleteChallengeById(challengeId: number) {
+    try {
+        const data = await fetch(`http://localhost:3000/api/thisandthat`, {
+            method: 'DELETE',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(challengeId)
+        })
+        return data
+    }
+    catch (err) {
+        console.log("Could not delete the challenge from the database")
+    }
+}

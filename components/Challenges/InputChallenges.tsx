@@ -7,11 +7,12 @@ import style from './challenges.module.scss'
 
 
 interface Props {
-    challengesDetails(challengeA: String, challengeB: String) :void
+    addChallenge(challengeA: String, challengeB: String) :void
 }
 
-const InputChallenges: FC<Props> = ( {challengesDetails} ) => {
+const InputChallenges: FC<Props> = ( {addChallenge} ) => {
     const [form, setForm] = useState<ThisAndThatInterface>({
+        _id: 0,
         this: "",
         that: ""
     })
@@ -23,7 +24,7 @@ const InputChallenges: FC<Props> = ( {challengesDetails} ) => {
 
     const saveInputs = (e: FormEvent) => {
         e.preventDefault()
-        challengesDetails(form.this, form.that)
+        addChallenge(form.this, form.that)
     }
     
     return (
@@ -54,7 +55,7 @@ const InputChallenges: FC<Props> = ( {challengesDetails} ) => {
                 />
             </form>
             <button className={style.button} type="submit" onClick={saveInputs}>
-                    <Image className={style.image} src="/Add_round_fill.png" alt="Logo" width="36" height="36" />
+                <Image className={style.image} src="/Add_round_fill.png" alt="Logo" width="36" height="36" />
             </button>
         </div> 
     ) 

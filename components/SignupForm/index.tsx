@@ -5,7 +5,7 @@ import { SignUpInterface } from '../../interfaces/Profile'
 import style from './signupform.module.scss'
 
 interface Props {
-    formDetails(
+    addForm(
         firstName: string,
         lastName: string,
         userName: string,
@@ -22,7 +22,7 @@ interface Props {
     }
 }
 
-const SignupForm: FC<Props> = ( {formDetails, errors} ) => {
+const SignupForm: FC<Props> = ( {addForm, errors} ) => {
     const [form, setForm] = useState<SignUpInterface>({
         firstName: "",
         lastName: "",
@@ -39,7 +39,7 @@ const SignupForm: FC<Props> = ( {formDetails, errors} ) => {
 
     const saveInputs = (e: FormEvent) => {
         e.preventDefault()
-        formDetails(form.firstName, form.lastName, form.userName, form.email, form.password, new Date())
+        addForm(form.firstName, form.lastName, form.userName, form.email, form.password, new Date())
     }
  
     return (

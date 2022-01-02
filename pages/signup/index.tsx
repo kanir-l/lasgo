@@ -55,7 +55,7 @@ const Signup: NextPage = () => {
                 </Link>
             </div>
             <div className={styles.homecontainer}>
-                <SignupForm formDetails={createUser} errors={errors} />
+                <SignupForm addForm={createUser} errors={errors} />
             </div>
         </div>
     )
