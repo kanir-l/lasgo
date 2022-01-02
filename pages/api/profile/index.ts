@@ -43,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             res.status(400).json( errorObject )
         }
     break
-    
+
     case 'DELETE':
         try {
             const profile = await ProfileModel.deleteOne( {_id: req.body} )
@@ -53,6 +53,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             res.status(400).json( {error: "Failed removing the profile"} )
         }
     break
+    
     default: 
     res.status(400).json( {error: "Failed"} )
   }

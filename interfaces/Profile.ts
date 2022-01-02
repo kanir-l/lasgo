@@ -26,14 +26,15 @@ export interface ProfileInterface {
     ]
 }
 
+export interface ThisAndThatInterface {
+    _id: number,
+    this: string,
+    that: string
+}
+
 export interface PicksInterface {
     thisAndthat: {
         thisAndthat: ThisAndThatInterface
     }
     picked: string
-}
-
-export interface ThisAndThatInterface {
-    this: string,
-    that: string
 }

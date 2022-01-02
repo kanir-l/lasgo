@@ -4,7 +4,7 @@ import React from 'react'
 import Header from '../../components/Header'
 import Profile from '../../components/Profile'
 // Services
-import { deleteUserProfile, renderProfileByUserName } from '../../services/database'
+import { deleteChallengeById, deleteUserProfile, renderProfileByUserName } from '../../services/database'
 // Interfaces
 import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
@@ -28,19 +28,27 @@ const user: NextPage<Props> = ({ user }) => {
         }
     }
 
-    const createChallenges = async (challengeA: string, challengeB: string) => {
-        console.log(challengeA, challengeB)
+    const createChallenge = async (challengeA: string, challengeB: string) => {
+        try {
+            
+        }
+        catch (error) {
+
+        }
+
         // TODO : POST to api model thisandthat
     }
 
-    const challenges = user.myChallenges.reverse().map((myChallenge) => {
-        return (
-            <>
-                <Challenges challenges={myChallenge}/>
-            </>
-        )
-    })  
-    
+    const deleteChallenge = async (challengeId: number) => {
+        try {
+            await deleteChallengeById(challengeId)
+            router.push('/profile/' + user.userName)
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+     
     return (
         <div className={styles.profilepagecontainer}>
             <Header />
@@ -53,8 +61,8 @@ const user: NextPage<Props> = ({ user }) => {
                     <li>My Acknowledgements</li>
                 </ul>
             </div>
-            <InputChallenges challengesDetails={createChallenges} />
-            {challenges} 
+            <InputChallenges addChallenge={createChallenge} />
+            <Challenges challenges={user.myChallenges} removeChallenge={deleteChallenge}/>
         </div>
     )
 }

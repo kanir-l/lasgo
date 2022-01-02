@@ -6,11 +6,8 @@
   justify-content: space-between;
 
     .info {
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
         margin: 1em 0em;
+        
 
         .this, .that {
             width: auto;
@@ -38,10 +35,6 @@
 /* Destop */
 @media only screen and (min-width: 768px) { 
     .challenges {
-        width: 80%;
-        display: flex;
-        justify-content: space-between;
-      
         .info {
             width: 80%;
             display: flex;
