@@ -1,10 +1,10 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import React from 'react'
+import React, { useState } from 'react'
 // Components
 import Header from '../../components/Header'
 import Profile from '../../components/Profile'
 // Services
-import { deleteChallengeById, deleteUserProfile, renderProfileByUserName } from '../../services/database'
+import { createThisAndThatFromInput, deleteChallengeById, deleteUserProfile, renderProfileByUserName } from '../../services/database'
 // Interfaces
 import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
@@ -18,6 +18,11 @@ interface Props {
 }
 
 const user: NextPage<Props> = ({ user }) => {
+    const [errors, setErrors] = useState({
+        this: { message: "" },
+        that: { message: "" }
+    })
+
     const deleteUser = async (userId: number) => {
         try {
             await deleteUserProfile(userId)
@@ -28,21 +33,31 @@ const user: NextPage<Props> = ({ user }) => {
         }
     }
 
-    const createChallenge = async (challengeA: string, challengeB: string) => {
+    const createChallenge = async (challengeThis: string, challengeThat: string, created: Date) => {
         try {
-            
+            const thisandthat = await createThisAndThatFromInput(challengeThis, challengeThat, created, user._id)
+            if(thisandthat?.ok) {
+                router.push(`/profile/${user.userName}`)
+            } else {
+                if(thisandthat){
+                    const response = await thisandthat.json();
+                    setErrors(response.error.errors)
+                } else {
+                    throw "Something went wrong that we couldn't recover from."
+                }
+            }
         }
         catch (error) {
-
+            console.log(error)
         }
-
-        // TODO : POST to api model thisandthat
     }
+
+
 
     const deleteChallenge = async (challengeId: number) => {
         try {
             await deleteChallengeById(challengeId)
-            router.push('/profile/' + user.userName)
+            router.push(`/profile/${user.userName}`)
         }
         catch (error) {
             console.log(error)

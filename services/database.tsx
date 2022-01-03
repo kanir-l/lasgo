@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb"
+
 export async function renderProfileByUserName(queryUser: String) {
     try {
         const data = await fetch(`http://localhost:3000/api/profile/${queryUser}`)
@@ -16,12 +18,12 @@ export async function createProfileFromSignUp(firstName: string, lastName: strin
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({firstName, lastName, userName, email, password, accountCreated, })
+            body: JSON.stringify({firstName, lastName, userName, email, password, accountCreated })
         })  
         return data
     }
     catch (err) {
-        console.log("Could not create the data from the database")
+        console.log("Could not create the data to the database")
     }
 }
 
@@ -39,6 +41,23 @@ export async function deleteUserProfile(userId: number) {
     }
     catch (err) {
         console.log("Could not delete the user from the database")
+    }
+}
+
+export async function createThisAndThatFromInput(challengeThis: string, challengeThat: string, created: Date, byUser: number) {
+    try {
+        const data = await fetch(`http://localhost:3000/api/thisandthat`, {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({challengeThis, challengeThat, created, byUser})
+        })
+        return data
+    }
+    catch (err) {
+        console.log("Could not create the challenge to the database")
     }
 }
 

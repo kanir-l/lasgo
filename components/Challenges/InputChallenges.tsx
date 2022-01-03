@@ -7,14 +7,16 @@ import style from './challenges.module.scss'
 
 
 interface Props {
-    addChallenge(challengeA: String, challengeB: String) :void
+    addChallenge(challengeThis: String, challengeThat: String, created: Date) :void
 }
 
 const InputChallenges: FC<Props> = ( {addChallenge} ) => {
     const [form, setForm] = useState<ThisAndThatInterface>({
         _id: 0,
-        this: "",
-        that: ""
+        challengeThis: "",
+        challengeThat: "",
+        created: new Date(),
+        byUser: 0
     })
 
     const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +26,7 @@ const InputChallenges: FC<Props> = ( {addChallenge} ) => {
 
     const saveInputs = (e: FormEvent) => {
         e.preventDefault()
-        addChallenge(form.this, form.that)
+        addChallenge(form.challengeThis, form.challengeThat, form.created)
     }
     
     return (
@@ -32,26 +34,26 @@ const InputChallenges: FC<Props> = ( {addChallenge} ) => {
             <form className={style.form} onSubmit={saveInputs}>
                 <input 
                     className={style.input}
-                    id="this" 
+                    id="challengeThis" 
                     type="text" 
                     autoComplete="name" 
                     required 
                     placeholder="This"
-                    value={form.this}
+                    value={form.challengeThis}
                     onChange={handleInputs}
-                    name="this"
+                    name="challengeThis"
                 />
                 <p className={style.line}>|</p>
                 <input 
                     className={style.input}
-                    id="that" 
+                    id="challengeThat" 
                     type="text" 
                     autoComplete="name" 
                     required 
                     placeholder="That"
-                    value={form.that}
+                    value={form.challengeThat}
                     onChange={handleInputs}
-                    name="that"
+                    name="challengeThat"
                 />
             </form>
             <button className={style.button} type="submit" onClick={saveInputs}>

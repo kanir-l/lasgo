@@ -21,9 +21,9 @@ const Challenges: FC<Props> = ( {challenges, removeChallenge} ) => {
             <>
                 <div className={style.challenges} >
                     <div className={style.info}>
-                        <button className={style.this}>{challenge.this}</button>
+                        <button className={style.this}>{challenge.challengeThis}</button>
                             <p className={style.line}>|</p>
-                        <button className={style.that}>{challenge.that}</button>
+                        <button className={style.that}>{challenge.challengeThat}</button>
                     </div> 
 
                     <button className={style.button} type="submit" onClick={() => handleRemove(challenge._id)} >
