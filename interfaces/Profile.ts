@@ -28,8 +28,10 @@ export interface ProfileInterface {
 
 export interface ThisAndThatInterface {
     _id: number,
-    this: string,
-    that: string
+    challengeThis: string,
+    challengeThat: string,
+    created: Date,
+    byUser: number
 }
 
 export interface PicksInterface {

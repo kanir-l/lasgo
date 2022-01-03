@@ -11,7 +11,6 @@ type Data = {
 }
 
 const profileDataMapper = (data: { firstName: string; lastName: string; userName: string; email: string; password: string; accountCreated: Date, about: string, image: string, tokenExpiration: string, myChallenges: [], myAcknowledgements: []}) => {
-  console.log('Received created data', data)
   const value = {
     firstName: data.firstName,
     lastName: data.lastName,
@@ -53,7 +52,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             res.status(400).json( {error: "Failed removing the profile"} )
         }
     break
-    
+
     default: 
     res.status(400).json( {error: "Failed"} )
   }
