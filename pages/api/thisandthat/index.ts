@@ -4,7 +4,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../utils/mongoDB'
 // Models
 import ThisAndThatModel from '../../../models/ThisAndThat'
-import ProfileModel from '../../../models/ProfileSchema'
 import { ObjectId } from 'mongodb'
 
 
@@ -33,13 +32,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                 const challenges = await ThisAndThatModel.find()
                 res.status(200).json( {data: challenges} )
             } catch (error) {
-                res.status(200).json( {error: "Something went wrong"} )
+                res.status(200).json( {error: "Fail to render this and that"} )
             }
         break
     
         case 'POST':
             try {
-                const challenge = await ThisAndThatModel.create(challengeDataMapper(req.body))
+                const createdChallenge = challengeDataMapper(req.body)
+                console.log({createdChallenge})
+                const challenge = await ThisAndThatModel.create(createdChallenge)
                 res.status(202).json( {data: challenge} )
             }
             catch(err) {
@@ -49,14 +50,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         break
 
         case 'DELETE':
-        try {
-            const challenge = await ThisAndThatModel.deleteOne( {_id: req.body} )
-            res.status(200).json( {data: {challenge}} )
-            // TODO: also need to delete/update the list of array in the myChallenges in the profile user
-        }
-        catch {
-            res.status(400).json( {error: "Failed removing the profile"} )
-        }
+            try {
+                const deletedChallenge = await ThisAndThatModel.findById(req.body, async function(err: object, tat: {remove: Function}){
+                    return await tat.remove()              
+                }).clone()
+                res.status(200).json( {data: {deletedChallenge}} )  
+            }
+            catch {
+                res.status(400).json( {error: "Failed to remove this and that"} )
+            }
         break
 
         default: 

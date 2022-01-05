@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb"
-
 export async function renderProfileByUserName(queryUser: String) {
     try {
         const data = await fetch(`http://localhost:3000/api/profile/${queryUser}`)
@@ -36,6 +34,23 @@ export async function deleteUserProfile(userId: number) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(userId)
+        })
+        return data
+    }
+    catch (err) {
+        console.log("Could not delete the user from the database")
+    }
+}
+
+export async function updateProfileWhenDeletingChallenge(challengeId: number) {
+    try {
+        const data = await fetch(`http://localhost:3000/api/profile`, {
+            method: 'PUT',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(challengeId)
         })
         return data
     }

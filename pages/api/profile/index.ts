@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../utils/mongoDB'
 // Models
 import ProfileModel from '../../../models/ProfileSchema'
+import Profile from '../../../components/Profile'
 
 
 type Data = {
@@ -34,7 +35,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch(method) {
     case 'POST':
         try {
-            const profile = await ProfileModel.create(profileDataMapper(req.body))
+            const createdProfile = profileDataMapper(req.body)
+            console.log({createdProfile})
+            const profile = await ProfileModel.create(createdProfile)
             res.status(201).json( {data: profile} )
         }
         catch(err) {
@@ -45,8 +48,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     case 'DELETE':
         try {
-            const profile = await ProfileModel.deleteOne( {_id: req.body} )
-            res.status(200).json( {data: profile} )
+            const deletedProfile = await ProfileModel.findById(req.body, async function(_err: any, profile: any){
+                return await profile.remove();                
+           });
+            res.status(200).json( {data: deletedProfile} )
         }
         catch {
             res.status(400).json( {error: "Failed removing the profile"} )
