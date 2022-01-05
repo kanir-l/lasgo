@@ -18,8 +18,8 @@ const Challenges: FC<Props> = ( {challenges, removeChallenge} ) => {
 
     const renderChallenge = challenges.reverse().map((challenge, index) => {
         return (
-            <>
-                <div className={style.challenges} >
+            <div key={index}>
+                <div className={style.challenges}>
                     <div className={style.info}>
                         <button className={style.this}>{challenge.challengeThis}</button>
                             <p className={style.line}>|</p>
@@ -30,7 +30,7 @@ const Challenges: FC<Props> = ( {challenges, removeChallenge} ) => {
                         <Image className={style.image} src="/Remove_fill.png" alt="Logo" width="36" height="36" />
                     </button>
                 </div>
-            </>
+            </div>
         )
     })   
 

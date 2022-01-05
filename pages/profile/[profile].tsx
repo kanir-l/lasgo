@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Header from '../../components/Header'
 import Profile from '../../components/Profile'
 // Services
-import { createThisAndThatFromInput, deleteChallengeById, deleteUserProfile, renderProfileByUserName } from '../../services/database'
+import { createThisAndThatFromInput, deleteChallengeById, deleteUserProfile, renderProfileByUserName, updateProfileWhenDeletingChallenge } from '../../services/database'
 // Interfaces
 import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
@@ -76,8 +76,11 @@ const user: NextPage<Props> = ({ user }) => {
                     <li>My Acknowledgements</li>
                 </ul>
             </div>
-            <InputChallenges addChallenge={createChallenge} />
-            <Challenges challenges={user.myChallenges} removeChallenge={deleteChallenge}/>
+            
+            <div className={styles.challenges}>
+                <InputChallenges addChallenge={createChallenge} />
+                <Challenges challenges={user.myChallenges} removeChallenge={deleteChallenge}/>
+            </div>
         </div>
     )
 }

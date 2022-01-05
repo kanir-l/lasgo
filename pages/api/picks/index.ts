@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 // Utils
-import { connect, models } from '../../../utils/mongoDB'
+import { connect } from '../../../utils/mongoDB'
 // Models
 import PicksModel from '../../../models/Picks'
 
