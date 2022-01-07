@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "models/ProfileSchema.js", "models/ThisAndThat.js", "pages/api/database.js", "lib/mongodb.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "models/ProfileSchema.js", "models/ChallengeSchema.js", "pages/api/database.js", "lib/mongodb.js"],
   "exclude": ["node_modules"]
 }

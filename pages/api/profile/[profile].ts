@@ -3,8 +3,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../utils/mongoDB'
 // Models
 import ProfileModel from '../../../models/ProfileSchema'
-import ThisAndThatModel from '../../../models/ThisAndThat'
-import PicksModel from '../../../models/Picks'
+import ChallengeModel from '../../../models/ChallengeSchema'
+import AcknowledgementModel from '../../../models/AcknowledgementSchema'
+import { ProfileInterface } from '../../../interfaces/Profile'
 
 
 type Data = {
@@ -20,7 +21,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch(method) {
     case 'GET':
       try {
-        const profile = await ProfileModel.find({ userName: queryUser }).populate({path: 'myChallenges', model: ThisAndThatModel}).populate({path: 'myAcknowledgements', model: PicksModel}) 
+        const profile: ProfileInterface = await ProfileModel.find({ userName: queryUser })
+          .populate({path: 'myChallenges', model: ChallengeModel})
+          .populate({path: 'myAcknowledgements', model: AcknowledgementModel, populate: {
+            path: 'challenge',
+            model: ChallengeModel
+          }})
         res.status(200).json( {data: profile} )
       } 
       catch (error) {

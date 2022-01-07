@@ -14,11 +14,11 @@ const ProfileSchema = new Schema({
     tokenExpiration: { type: Date },
     myChallenges: [{ 
         type: mongoose.Schema.Types.ObjectId,
-        ref: "thisandthats",
+        ref: "challenge",
     }],
     myAcknowledgements: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "picks",
+        ref: "acknowledgement",
     }]
 })
 

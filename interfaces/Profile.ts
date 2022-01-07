@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface SignUpInterface { 
     firstName: string,
     lastName: string,
@@ -19,24 +21,23 @@ export interface ProfileInterface {
     image: string,
     tokenExpiration: Date,
     myChallenges: [
-        ThisAndThatInterface
+        ChallengeInterface
     ],
     myAcknowledgements: [
-        PicksInterface
+        AcknowledgementInterface
     ]
 }
 
-export interface ThisAndThatInterface {
+export interface ChallengeInterface {
     _id: number,
     challengeThis: string,
     challengeThat: string,
     created: Date,
-    byUser: number
+    byUser: ObjectId
 }
 
-export interface PicksInterface {
-    thisAndthat: {
-        thisAndthat: ThisAndThatInterface
-    }
+export interface AcknowledgementInterface {
+    _id: number,
+    challenge: ChallengeInterface
     picked: string
 }

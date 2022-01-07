@@ -3,23 +3,25 @@ const { Schema } = mongoose
 mongoose.Promis = global.Promise
 const ProfileModel = require('./ProfileSchema')
 
-const ThisAndThatSchema = new Schema({
-    challengeThis: { type: String, minlength: 2, maxlength: 30 },
-    challengeThat: { type: String, minlength: 2, maxlength: 30 },
-    created: { type: Date },
-    byUser: {
+const AcknowledgementSchema = new Schema({
+    challenge: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "challenges",
+    },
+    picked: { type: String },
+    by: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "profile"
     }
 })
 
 // Model functions
-ThisAndThatSchema.post('save', true, async function(next) {
+AcknowledgementSchema.post('save', true, async function(next) {
     const self = this
     try {
         await ProfileModel.updateOne(
-            { _id: self.byUser },
-            { $push: { myChallenges: self._id } },
+            { _id: self.by },
+            { $push: { myAcknowledgements: self._id } },
             next
         )
     } catch (error) {
@@ -27,16 +29,14 @@ ThisAndThatSchema.post('save', true, async function(next) {
     }
 })
 
-ThisAndThatSchema.pre('remove', async function(next) {
+AcknowledgementSchema.pre('remove', async function(next) {
     const self = this
     try {
         await ProfileModel.updateMany(
             { $or: [
-                { myChallenges: self._id },
                 { myAcknowledgements: self._id },
             ]},
             { $pull: { 
-                myChallenges: self._id, 
                 myAcknowledgements: self._id 
             }}, 
             { multi: true }, 
@@ -47,6 +47,7 @@ ThisAndThatSchema.pre('remove', async function(next) {
     }
 })
 
-const ThisAndThatModel = mongoose.models.thisandthats || mongoose.model('thisandthats', ThisAndThatSchema)
+const AcknowledgementModel = mongoose.models.acknowledgement || (mongoose.model('acknowledgement', AcknowledgementSchema))
 
-module.exports = ThisAndThatModel;
+module.exports = AcknowledgementModel;
+

@@ -36,7 +36,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'POST':
         try {
             const createdProfile = profileDataMapper(req.body)
-            console.log({createdProfile})
             const profile = await ProfileModel.create(createdProfile)
             res.status(201).json( {data: profile} )
         }
