@@ -1,9 +1,11 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react'
 import Image from 'next/image'
 // Interfaces
-import { ThisAndThatInterface } from '../../interfaces/Profile'
+import { ChallengeInterface } from '../../interfaces/Profile'
 // Styles
 import style from './challenges.module.scss'
+import { ObjectId } from 'mongodb'
+import { ObjectID } from 'bson'
 
 
 interface Props {
@@ -11,7 +13,7 @@ interface Props {
 }
 
 const InputChallenges: FC<Props> = ( {addChallenge} ) => {
-    const [form, setForm] = useState<ThisAndThatInterface>({
+    const [form, setForm] = useState<ChallengeInterface>({
         _id: 0,
         challengeThis: "",
         challengeThat: "",

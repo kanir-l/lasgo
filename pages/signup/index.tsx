@@ -9,7 +9,7 @@ import SignupForm from '../../components/SignupForm'
 // Styles
 import styles from '../../styles/Home.module.css'
 // Services
-import { createProfileFromSignUp } from '../../services/database'
+import { createProfileFromSignUp } from '../../services/api'
 
 
 const Signup: NextPage = () => {

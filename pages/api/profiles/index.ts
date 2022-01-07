@@ -2,8 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 // Models
 import ProfileModel from '../../../models/ProfileSchema'
-import ThisAndThatModel from '../../../models/ThisAndThat'
-import PicksModel from '../../../models/Picks'
+import ChallengeModel from '../../../models/ChallengeSchema'
+import AcknowledgementModel from '../../../models/AcknowledgementSchema'
 
 
 type Data = {
@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch(method) {
     case 'GET':
     try {
-      const profiles = await ProfileModel.find().populate({path: 'myChallenges', model: ThisAndThatModel}).populate({path: 'myAcknowledgements', model: PicksModel})
+      const profiles = await ProfileModel.find().populate({path: 'myChallenges', model: ChallengeModel}).populate({path: 'myAcknowledgements', model: AcknowledgementModel})
       res.status(200).json( {data: profiles} )
     } catch (error) {
       console.log(error)
