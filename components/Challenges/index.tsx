@@ -9,12 +9,11 @@ import style from './challenges.module.scss'
 interface Props {
     challenges: ChallengeInterface[],
     removeChallenge(challengeId: number): void
-    byUser: string
-
+ 
     acknowledgeChallenge(challengeId: number, pickedChallenge: string): void
 }
 
-const Challenges: FC<Props> = ( {challenges, removeChallenge, byUser, acknowledgeChallenge} ) => {
+const Challenges: FC<Props> = ( {challenges, removeChallenge, acknowledgeChallenge} ) => {
     const handleRemove = (challengeId: number) => {
         removeChallenge(challengeId)
     }
@@ -42,7 +41,7 @@ const Challenges: FC<Props> = ( {challenges, removeChallenge, byUser, acknowledg
                     </button>
 
                     <div className={style.byuser}>
-                        <p>{byUser}</p>
+                        <p>{challenge.byUser}</p>
                         <p>{challenge.created}</p>
                     </div>
                 </div>

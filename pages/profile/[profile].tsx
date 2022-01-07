@@ -120,13 +120,16 @@ const user: NextPage<Props> = ({ user }) => {
                 <Challenges 
                     challenges={user.myChallenges} 
                     removeChallenge={deleteChallenge} 
-                    byUser={user.userName}
-                    acknowledgeChallenge={createAcknowledgement}/>
+                    acknowledgeChallenge={createAcknowledgement}
+                />
             </div>
 
             <div className={styles.acknowledgements}>
-                <Acknowledgements acknowledgements={user.myAcknowledgements} removeAcknowledgement={deleteAcknowledgement}/> 
-                    {/* .filter((acknowledgement) => (acknowledgement.challenge.byUser !== user._id)) */}
+                <Acknowledgements 
+                    acknowledgements={user.myAcknowledgements} 
+                    removeAcknowledgement={deleteAcknowledgement}
+                /> 
+                {/* .filter((acknowledgement) => (acknowledgement.challenge.byUser !== user._id)) */}
             </div>
         </div>
     )
