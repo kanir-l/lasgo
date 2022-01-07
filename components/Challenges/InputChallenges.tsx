@@ -4,8 +4,6 @@ import Image from 'next/image'
 import { ChallengeInterface } from '../../interfaces/Profile'
 // Styles
 import style from './challenges.module.scss'
-import { ObjectId } from 'mongodb'
-import { ObjectID } from 'bson'
 
 
 interface Props {
