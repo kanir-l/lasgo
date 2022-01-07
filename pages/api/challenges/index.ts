@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 // Utils
 import { connect } from '../../../utils/mongoDB'
 // Models
-import ThisAndThatModel from '../../../models/ThisAndThat'
+import ChallengeModel from '../../../models/ChallengeSchema'
 import { ObjectId } from 'mongodb'
 
 
@@ -20,7 +20,7 @@ const challengeDataMapper = (data: { challengeThis: string; challengeThat: strin
       byUser: data.byUser
     }
     return value
-  }
+}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await connect()
@@ -29,18 +29,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     switch(method) {
         case 'GET':
             try {
-                const challenges = await ThisAndThatModel.find()
+                const challenges = await ChallengeModel.find()
                 res.status(200).json( {data: challenges} )
-            } catch (error) {
-                res.status(200).json( {error: "Fail to render this and that"} )
+            } 
+            catch (error) {
+                res.status(200).json( {error: "Fail to render challenges"} )
             }
         break
     
         case 'POST':
             try {
                 const createdChallenge = challengeDataMapper(req.body)
-                console.log({createdChallenge})
-                const challenge = await ThisAndThatModel.create(createdChallenge)
+                const challenge = await ChallengeModel.create(createdChallenge)
                 res.status(202).json( {data: challenge} )
             }
             catch(err) {
@@ -51,13 +51,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
         case 'DELETE':
             try {
-                const deletedChallenge = await ThisAndThatModel.findById(req.body, async function(err: object, tat: {remove: Function}){
-                    return await tat.remove()              
+                const deletedChallenge = await ChallengeModel.findById(req.body, async function(err: object, challenge: {remove: Function}){
+                    return await challenge.remove()              
                 }).clone()
                 res.status(200).json( {data: {deletedChallenge}} )  
             }
             catch {
-                res.status(400).json( {error: "Failed to remove this and that"} )
+                res.status(400).json( {error: "Failed to remove challenges"} )
             }
         break
 

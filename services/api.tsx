@@ -1,3 +1,4 @@
+//Profiles
 export async function renderProfileByUserName(queryUser: String) {
     try {
         const data = await fetch(`http://localhost:3000/api/profile/${queryUser}`)
@@ -9,6 +10,7 @@ export async function renderProfileByUserName(queryUser: String) {
 }  
 
 export async function createProfileFromSignUp(firstName: string, lastName: string, userName: string, email: string, password: string, accountCreated: Date) {
+    // Creating needs to match the property names with model/database
     try {
         const data = await fetch(`http://localhost:3000/api/profile`, {
             method: 'POST',
@@ -42,26 +44,11 @@ export async function deleteUserProfile(userId: number) {
     }
 }
 
-export async function updateProfileWhenDeletingChallenge(challengeId: number) {
+//myChallenges
+export async function createChallengeFromInput(challengeThis: string, challengeThat: string, created: Date, byUser: number) {
+    // Creating needs to match the property names with model/database
     try {
-        const data = await fetch(`http://localhost:3000/api/profile`, {
-            method: 'PUT',
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(challengeId)
-        })
-        return data
-    }
-    catch (err) {
-        console.log("Could not delete the user from the database")
-    }
-}
-
-export async function createThisAndThatFromInput(challengeThis: string, challengeThat: string, created: Date, byUser: number) {
-    try {
-        const data = await fetch(`http://localhost:3000/api/thisandthat`, {
+        const data = await fetch(`http://localhost:3000/api/challenges`, {
             method: 'POST',
             headers: {
                 "Accept": "application/json",
@@ -78,7 +65,7 @@ export async function createThisAndThatFromInput(challengeThis: string, challeng
 
 export async function deleteChallengeById(challengeId: number) {
     try {
-        const data = await fetch(`http://localhost:3000/api/thisandthat`, {
+        const data = await fetch(`http://localhost:3000/api/challenges`, {
             method: 'DELETE',
             headers: {
                 "Accept": "application/json",
@@ -92,3 +79,42 @@ export async function deleteChallengeById(challengeId: number) {
         console.log("Could not delete the challenge from the database")
     }
 }
+
+//myAcknowledements
+export async function createAcknowledgementByPickedChallenge(challenge: number, picked: string, by: number) {
+    // Creating needs to match the property names with model/database
+    try {
+        const data = await fetch(`http://localhost:3000/api/acknowledgements`, {
+            method: 'POST',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({challenge, picked, by})
+        })
+        return data
+    }
+    catch (err) {
+        console.log("Count not create acknowledgement to the database")
+    }
+}
+
+export async function deleteAcknowledgementById(acknowledgementId: number) {
+    try {
+        const data = await fetch(`http://localhost:3000/api/acknowledgements`, {
+            method: 'DELETE',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(acknowledgementId)
+        })
+        return data
+    }
+    catch (err) {
+        console.log("Could not delete the acknowledgement from the database")
+    }
+}
+
+
+
