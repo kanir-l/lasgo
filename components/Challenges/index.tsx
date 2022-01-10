@@ -20,7 +20,7 @@ const Challenges: FC<Props> = ( {user, challenges, removeChallenge, acknowledged
         removeChallenge(challengeId)
     }
 
-    const handleClick = (challengeId: number, pickedChallenge: string) => {
+    const handlePick = (challengeId: number, pickedChallenge: string) => {
         acknowledgedChallenge(challengeId, pickedChallenge)
     }
 
@@ -39,13 +39,12 @@ const Challenges: FC<Props> = ( {user, challenges, removeChallenge, acknowledged
                         that has the string value that from "myAcknowledgements -> picked" 
                         is the same as myChallenges -> challengeThis, then take the className of style.picked */}
                         {acknowledgedChallenges[challenge._id] === challenge.challengeThis ? 
-                            <button disabled className={style.picked} 
-                                onClick={() => handleClick(challenge._id, challenge.challengeThis)}>
+                            <button disabled className={style.picked}>
                                 {challenge.challengeThis}
                             </button>
                         : 
                             <button className={style.this} 
-                                onClick={() => handleClick(challenge._id, challenge.challengeThis)}>
+                                onClick={() => handlePick(challenge._id, challenge.challengeThis)}>
                                 {challenge.challengeThis}
                             </button>
                         }
@@ -53,13 +52,12 @@ const Challenges: FC<Props> = ( {user, challenges, removeChallenge, acknowledged
                         <p className={style.line}>|</p>
 
                         {acknowledgedChallenges[challenge._id] === challenge.challengeThat ? 
-                            <button disabled className={style.picked} 
-                                onClick={() => handleClick(challenge._id, challenge.challengeThat)}>
+                            <button disabled className={style.picked}>
                                 {challenge.challengeThat}
                             </button>
                         : 
                             <button className={style.that} 
-                                onClick={() => handleClick(challenge._id, challenge.challengeThat)}>
+                                onClick={() => handlePick(challenge._id, challenge.challengeThat)}>
                                 {challenge.challengeThat}
                             </button>
                         }
@@ -70,7 +68,7 @@ const Challenges: FC<Props> = ( {user, challenges, removeChallenge, acknowledged
                     </button>
 
                     <div className={style.byuser}>
-                        <p>{challenge.byUser}</p>
+                        <p>{challenge.byUser.userName}</p>
                         <p>{challenge.created}</p>
                     </div>
                 </div>

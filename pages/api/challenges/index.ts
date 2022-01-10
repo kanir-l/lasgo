@@ -5,6 +5,7 @@ import { connect } from '../../../utils/mongoDB'
 // Models
 import ChallengeModel from '../../../models/ChallengeSchema'
 import { ObjectId } from 'mongodb'
+import ProfileModel from '../../../models/ProfileSchema'
 
 
 type Data = {
@@ -30,6 +31,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         case 'GET':
             try {
                 const getChallenges = await ChallengeModel.find()
+                    .populate(
+                        {
+                            path: 'byUser', 
+                            model: ProfileModel
+                        }
+                    )
                 res.status(200).json( {data: getChallenges} )
             } 
             catch (error) {
