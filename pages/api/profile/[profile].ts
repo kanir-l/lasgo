@@ -22,11 +22,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'GET':
       try {
         const profile: ProfileInterface = await ProfileModel.find({ userName: queryUser })
-          .populate({path: 'myChallenges', model: ChallengeModel})
-          .populate({path: 'myAcknowledgements', model: AcknowledgementModel, populate: {
-            path: 'challenge',
-            model: ChallengeModel
-          }})
+          .populate(
+            {
+              path: 'myChallenges', 
+              model: ChallengeModel, 
+              populate: {
+                path: 'byUser', 
+                model: ProfileModel
+              }
+            }
+          )
+          .populate(
+            {
+              path: 'myAcknowledgements', 
+              model: AcknowledgementModel, 
+              populate: {
+                path: 'challenge', model: ChallengeModel, 
+                populate: {
+                  path: 'byUser', 
+                  model: ProfileModel
+                }
+              }
+            }
+          )
         res.status(200).json( {data: profile} )
       } 
       catch (error) {

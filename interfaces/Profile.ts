@@ -31,7 +31,7 @@ export interface ChallengeInterface {
     challengeThis: string,
     challengeThat: string,
     created: Date,
-    byUser: number
+    byUser: ProfileInterface
 }
 
 export interface AcknowledgementInterface {

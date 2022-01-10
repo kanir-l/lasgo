@@ -56,7 +56,7 @@ const Acknowledgements: FC<Props> = ( {acknowledgements, removeAcknowledgement, 
                     </button>
 
                     <div className={style.byuser}>
-                        <p>{acknowledgement.challenge.byUser}</p>
+                        <p>{acknowledgement.challenge.byUser.userName}</p>
                         <p>{acknowledgement.challenge.created}</p>
                     </div>
                 </div>

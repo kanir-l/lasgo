@@ -5,6 +5,8 @@ import { connect } from '../../../utils/mongoDB'
 // Models
 import AcknowledgementModel from '../../../models/AcknowledgementSchema'
 import { ObjectId } from 'mongodb'
+import ProfileModel from '../../../models/ProfileSchema'
+import ChallengeModel from '../../../models/ChallengeSchema'
 
 type Data = {
   data?: Object
@@ -28,6 +30,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'GET':
       try {
         const getAcknowledgements = await AcknowledgementModel.find()
+          .populate(
+            {
+              path: 'challenge', 
+              model: ChallengeModel, 
+              populate: {
+                path: 'byUser', 
+                model: ProfileModel
+              }
+            })
         res.status(200).json( {data: getAcknowledgements} )
       } 
       catch (error) {
@@ -38,10 +49,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'POST':
       try {
           const createdAcknowledgement = acknowledgementDataMapper(req.body)
-          const postAcknowledgement = await AcknowledgementModel.create(createdAcknowledgement)
-          res.status(202).json( {data: postAcknowledgement} )
+          const existedAcknowledgement = await AcknowledgementModel.find({challenge: req.body.challenge, by: req.body.by})
+         
+          if (existedAcknowledgement.length === 0) {
+            const postAcknowledgement = await AcknowledgementModel.create(createdAcknowledgement)
+            res.status(202).json( {data: postAcknowledgement} )
+          } else {
+            const acknowledgementId = existedAcknowledgement[0]._id
+            const updatedChallenge = await AcknowledgementModel.findByIdAndUpdate(acknowledgementId, {picked: req.body.picked})
+            res.status(202).json( {data: updatedChallenge} )
+          }
       }
       catch(err) {
+          console.error(err)
           const errorObject: {error: any} = {error: err}
           res.status(400).json( errorObject )
       }

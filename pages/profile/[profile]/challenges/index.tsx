@@ -13,7 +13,8 @@ import {
     createChallengeFromInput, 
     deleteChallengeById, 
     deleteUserProfile, 
-    renderProfileByUserName 
+    renderProfileByUserName, 
+    updateAcknowledgementByIdWithNewPick
 } from '../../../../services/api'
 // Interfaces
 import { ProfileInterface } from '../../../../interfaces/Profile'
@@ -85,13 +86,13 @@ const user: NextPage<Props> = ({ user }) => {
             if(acknowledgement?.ok) {
                 router.push(`/profile/${user.userName}/challenges`)
             } else {
-                if(acknowledgement){
+                if(acknowledgement) {
                     const response = await acknowledgement.json();
                     setErrors(response.error.errors)
                 } else {
                     throw "Something went wrong that we couldn't recover from."
                 }
-            }
+            } 
         }
         catch (error) {
             console.log(error)

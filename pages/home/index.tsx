@@ -53,7 +53,7 @@ const user: NextPage<Props> = ({ allChallenges, user }) => {
    
     return (
         <div className={styles.profilepagecontainer}>
-            <Header profile={user}/>
+            <Header profile={user} />
            
             <div className={styles.challenges}>
                 <Challenges 
@@ -68,11 +68,11 @@ const user: NextPage<Props> = ({ allChallenges, user }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    /* const queryUser = String(context.query.profile)  */
+    /* const queryUser = String(context.query.profile) 
 
-    /* const resProfile = await renderProfileByUserName(queryUser)
+    const resProfile = await renderProfileByUserName(queryUser)
     const dataProfile = await resProfile?.json()
-    const profile = dataProfile.data  */ 
+    const profile = dataProfile.data   */
 
     const resAllChallenges = await renderAllChallenges()
     const dataAllChallenges = await resAllChallenges?.json()
