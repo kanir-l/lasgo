@@ -2,31 +2,53 @@ import React, { FC } from 'react'
 import Image from 'next/image'
 // Interfaces
 import { AcknowledgementInterface } from '../../interfaces/Profile'
-import Challenge from '../Challenges/Challenge'
 // Styles
 import style from './acknowledgements.module.scss'
-import { Number } from 'mongoose'
 
 
 interface Props {
     acknowledgements: AcknowledgementInterface[],
     removeAcknowledgement(acknowledgementId: number): void
+    editAcknowledgement(acknowledgementId: number, picked: string): void
 }
 
-const Acknowledgements: FC<Props> = ( {acknowledgements, removeAcknowledgement} ) => {
+const Acknowledgements: FC<Props> = ( {acknowledgements, removeAcknowledgement, editAcknowledgement} ) => {
     const handleRemove = (acknowledgementId: number) => {
         removeAcknowledgement(acknowledgementId)
     }
-   
+
+    const handleEdit = (acknowledgementId: number, picked: string) => {
+        editAcknowledgement(acknowledgementId, picked)
+    }
+
     const renderAcknowledgement = acknowledgements.map((acknowledgement, index) => { 
         return (
             <div key={index}>
                 <div className={style.acknowledgements}>
                     <div className={style.info}>
-                        {/* <Challenge challenge={acknowledgement.challenge} /> */}
-                        <button className={style.this}>{acknowledgement.challenge.challengeThis}</button>
-                            <p className={style.line}>|</p>
-                        <button className={style.that}>{acknowledgement.challenge.challengeThat}</button>
+                        {acknowledgement.picked === acknowledgement.challenge.challengeThis ? 
+                            <button disabled className={style.picked}>
+                                {acknowledgement.challenge.challengeThis}
+                            </button> 
+                        :
+                            <button className={style.this}
+                                onClick={() => handleEdit(acknowledgement._id, acknowledgement.challenge.challengeThis)}>
+                                {acknowledgement.challenge.challengeThis}
+                            </button>
+                        }
+
+                        <p className={style.line}>|</p>
+
+                        {acknowledgement.picked === acknowledgement.challenge.challengeThat ? 
+                            <button disabled className={style.picked}>
+                                {acknowledgement.challenge.challengeThat}
+                            </button> 
+                        :
+                            <button className={style.that} 
+                                onClick={() => handleEdit(acknowledgement._id, acknowledgement.challenge.challengeThat)}>
+                                {acknowledgement.challenge.challengeThat}
+                            </button>
+                        }
                     </div> 
 
                     <button className={style.button} type="submit" onClick={() => handleRemove(acknowledgement._id)} >

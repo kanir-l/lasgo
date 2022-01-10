@@ -1,25 +1,26 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import React, { useState } from 'react'
-import router from 'next/router'
+import router, { useRouter } from 'next/router'
+import Link from 'next/link'
 // Components
-import Header from '../../components/Header'
-import Profile from '../../components/Profile'
-import Challenges from '../../components/Challenges'
-import InputChallenges from '../../components/Challenges/InputChallenges'
-import Acknowledgements from '../../components/Acknowledgements'
+import Header from '../../../../components/Header'
+import Profile from '../../../../components/Profile'
+import Challenges from '../../../../components/Challenges'
+import InputChallenges from '../../../../components/Challenges/InputChallenges'
 // Services
 import { 
     createAcknowledgementByPickedChallenge, 
     createChallengeFromInput, 
-    deleteAcknowledgementById, 
     deleteChallengeById, 
     deleteUserProfile, 
     renderProfileByUserName 
-} from '../../services/api'
+} from '../../../../services/api'
 // Interfaces
-import { ProfileInterface } from '../../interfaces/Profile'
+import { ProfileInterface } from '../../../../interfaces/Profile'
+import { Error } from '../../../../interfaces/Error'
 // Styles
-import styles from '../../styles/Home.module.css'
+import styles from '../../../../styles/Home.module.css'
+import { linkSync } from 'fs'
 
 
 interface Props {
@@ -27,11 +28,16 @@ interface Props {
 }
 
 const user: NextPage<Props> = ({ user }) => {
-    const [errors, setErrors] = useState({
-        this: { message: "" },
-        that: { message: "" }
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const router = useRouter()
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const [errors, setErrors] = useState<Error>({
+        challengeThis: { message: "" },
+        challengeThat: { message: "" }
     })
 
+    // Profile
     const deleteUser = async (userId: number) => {
         try {
             await deleteUserProfile(userId)
@@ -47,7 +53,7 @@ const user: NextPage<Props> = ({ user }) => {
         try {
             const challenge = await createChallengeFromInput(challengeThis, challengeThat, created, user._id)
             if(challenge?.ok) {
-                router.push(`/profile/${user.userName}`)
+                router.push(`/profile/${user.userName}/challenges`)
             } else {
                 if(challenge){
                     const response = await challenge.json();
@@ -65,7 +71,7 @@ const user: NextPage<Props> = ({ user }) => {
     const deleteChallenge = async (challengeId: number) => {
         try {
             await deleteChallengeById(challengeId)
-            router.push(`/profile/${user.userName}`)
+            router.push(`/profile/${user.userName}/challenges`)
         }
         catch (error) {
             console.log(error)
@@ -77,7 +83,7 @@ const user: NextPage<Props> = ({ user }) => {
         try {
             const acknowledgement = await createAcknowledgementByPickedChallenge(challengeId, pickedChallenge, user._id)
             if(acknowledgement?.ok) {
-                router.push(`/profile/${user.userName}`)
+                router.push(`/profile/${user.userName}/challenges`)
             } else {
                 if(acknowledgement){
                     const response = await acknowledgement.json();
@@ -91,45 +97,40 @@ const user: NextPage<Props> = ({ user }) => {
             console.log(error)
         }
     }
-
-    const deleteAcknowledgement = async (acknowledgementId: number) => {
-        try {
-            await deleteAcknowledgementById(acknowledgementId)
-            router.push(`/profile/${user.userName}`)
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
      
     return (
         <div className={styles.profilepagecontainer}>
-            <Header />
+            <Header profile={user} />
 
             <Profile profile={user} removeProfile={deleteUser}/>
            
             <div className={styles.topiccontainer}>
                 <ul>
-                    <li>My Challenges</li>
-                    <li>My Acknowledgements</li>
+                    <li>
+                        <Link href={`/profile/${user.userName}/acknowledgements`} passHref>
+                            <a className={router.pathname == "/profile/[profile]/acknowledgements" ? styles.active : ""}>
+                                My Acknowledgements
+                            </a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href={`/profile/${user.userName}/challenges`} passHref>
+                            <a className={router.pathname == "/profile/[profile]/challenges" ? styles.active : ""}>
+                                My Challenges
+                            </a>
+                        </Link>
+                    </li>
                 </ul>
-            </div>
-            
+            </div> 
+
             <div className={styles.challenges}>
-                <InputChallenges addChallenge={createChallenge} />
+                <InputChallenges addChallenge={createChallenge} error={errors}/>
                 <Challenges 
+                    user={user}
                     challenges={user.myChallenges} 
                     removeChallenge={deleteChallenge} 
-                    acknowledgeChallenge={createAcknowledgement}
+                    acknowledgedChallenge={createAcknowledgement}
                 />
-            </div>
-
-            <div className={styles.acknowledgements}>
-                <Acknowledgements 
-                    acknowledgements={user.myAcknowledgements} 
-                    removeAcknowledgement={deleteAcknowledgement}
-                /> 
-                {/* .filter((acknowledgement) => (acknowledgement.challenge.byUser !== user._id)) */}
             </div>
         </div>
     )
@@ -150,3 +151,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 export default user
+

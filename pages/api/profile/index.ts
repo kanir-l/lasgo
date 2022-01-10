@@ -36,8 +36,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'POST':
         try {
             const createdProfile = profileDataMapper(req.body)
-            const profile = await ProfileModel.create(createdProfile)
-            res.status(201).json( {data: profile} )
+            const postProfile = await ProfileModel.create(createdProfile)
+            res.status(201).json( {data: postProfile} )
         }
         catch(err) {
             const errorObject: {error: any} = {error: err}

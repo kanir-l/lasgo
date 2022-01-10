@@ -1,11 +1,16 @@
 import React, { FC } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+// Interfaces
+import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
 import style from './header.module.scss'
 
+interface Props {
+    profile?: ProfileInterface,
+}
 
-const Header: FC = () => {
+const Header: FC<Props> = ( {profile} ) => {
     return (
         <div className={style.header}>
             <div className={style.logolight}>
@@ -19,7 +24,7 @@ const Header: FC = () => {
                     <Image src="/home-icon.png" alt="Logo" width="26"
                     height="26" />
                 </Link>
-                <Link href={`/profiles`} passHref>
+                <Link href={`/profile/${profile?.userName}`} passHref>
                     <Image src="/user-icon.png" alt="Logo" width="26"
                     height="26" />
                 </Link>
