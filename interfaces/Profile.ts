@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb";
-
 export interface SignUpInterface { 
     firstName: string,
     lastName: string,
@@ -33,7 +31,7 @@ export interface ChallengeInterface {
     challengeThis: string,
     challengeThat: string,
     created: Date,
-    byUser: ObjectId
+    byUser: number
 }
 
 export interface AcknowledgementInterface {

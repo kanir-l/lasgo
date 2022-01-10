@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import Link from 'next/link'
 // Styles
 import style from './profile.module.scss'
 import { ProfileInterface } from '../../interfaces/Profile'
@@ -11,8 +12,8 @@ interface Props {
 
 const Profile: FC<Props> = ( {profile, removeProfile} ) => {
 
-    const countChallenges = profile.myChallenges.length 
     const countAcknowledgements = profile.myAcknowledgements.length 
+    const countChallenges = profile.myChallenges.length 
  
     const handleRemove = (profileId: number) => {
         removeProfile(profileId)
@@ -24,14 +25,22 @@ const Profile: FC<Props> = ( {profile, removeProfile} ) => {
                 <div className={style.image}>Image</div>
             </div>
             <div className={style.info}>
-                <h1>{profile.userName}</h1>
+                <h1>
+                    <Link href={`/profile/${profile.userName}`} passHref>
+                        {profile.userName}
+                    </Link>
+                </h1>
                 <div className={style.activities}>
-                    {!profile.myChallenges ? 0 : 
-                    <p>{countChallenges} Challenges</p>
-                    }
                     {!profile.myAcknowledgements ? 0 : 
-                    <p>{countAcknowledgements} Acknowledgements</p>
+                        <Link href={`/profile/${profile.userName}/acknowledgements`} passHref>
+                            <a>{countAcknowledgements} Acknowledgements</a>
+                        </Link>
                     } 
+                    {!profile.myChallenges ? 0 : 
+                        <Link href={`/profile/${profile.userName}/challenges`} passHref>
+                            <a>{countChallenges} Challenges</a>
+                        </Link>
+                    }
                 </div>
                 <p>{profile.firstName}</p>
                 <p>{profile.about}</p>

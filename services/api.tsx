@@ -80,6 +80,16 @@ export async function deleteChallengeById(challengeId: number) {
     }
 }
 
+export async function renderAllChallenges() {
+    try {
+        const data = await fetch(`http://localhost:3000/api/challenges`)
+        return data
+    }
+    catch (err) {
+        console.log("Could not fetch the data from the database")
+    }
+}  
+
 //myAcknowledements
 export async function createAcknowledgementByPickedChallenge(challenge: number, picked: string, by: number) {
     // Creating needs to match the property names with model/database
@@ -113,6 +123,24 @@ export async function deleteAcknowledgementById(acknowledgementId: number) {
     }
     catch (err) {
         console.log("Could not delete the acknowledgement from the database")
+    }
+}
+
+export async function updateAcknowledgementByIdWithNewPick(acknowledgementId: number, picked: string) {
+    try {
+        const data = await fetch(`http://localhost:3000/api/acknowledgements`, {
+            method: 'PUT',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({acknowledgementId, picked})
+        })
+        return data
+    }
+    catch (err) {
+        console.log("Could not update acknowledgement")
+        return err
     }
 }
 

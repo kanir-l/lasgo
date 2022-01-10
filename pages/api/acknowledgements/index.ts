@@ -27,8 +27,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch(method) {
     case 'GET':
       try {
-        const acknowledgements = await AcknowledgementModel.find()
-        res.status(200).json( {data: acknowledgements} )
+        const getAcknowledgements = await AcknowledgementModel.find()
+        res.status(200).json( {data: getAcknowledgements} )
       } 
       catch (error) {
         res.status(200).json( {error: "Fail to render acknowledgements"} )
@@ -38,8 +38,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     case 'POST':
       try {
           const createdAcknowledgement = acknowledgementDataMapper(req.body)
-          const acknowledgement = await AcknowledgementModel.create(createdAcknowledgement)
-          res.status(202).json( {data: acknowledgement} )
+          const postAcknowledgement = await AcknowledgementModel.create(createdAcknowledgement)
+          res.status(202).json( {data: postAcknowledgement} )
       }
       catch(err) {
           const errorObject: {error: any} = {error: err}
@@ -56,6 +56,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       }
       catch {
           res.status(400).json( {error: "Failed to remove acknowledgements"} )
+      }
+    break
+
+    case 'PUT':
+      try {
+        const putAcknowledgement = await AcknowledgementModel.findByIdAndUpdate(req.body.acknowledgementId, {picked: req.body.picked})
+        res.status(202).json( {data: putAcknowledgement} )
+      }
+      catch(err) {
+        res.status(400).json( {error: "Failed to update acknowledgements"} )
       }
     break
 

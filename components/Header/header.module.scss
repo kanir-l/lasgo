@@ -17,9 +17,11 @@
         justify-content: center;
         justify-content: space-between;
         align-items: center;
+        cursor: pointer;
 
         .logout {
-            color:rgb(201, 201, 201)
+            color:rgb(201, 201, 201);
+            cursor: pointer;
         }
     }
 }

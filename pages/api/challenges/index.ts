@@ -29,8 +29,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     switch(method) {
         case 'GET':
             try {
-                const challenges = await ChallengeModel.find()
-                res.status(200).json( {data: challenges} )
+                const getChallenges = await ChallengeModel.find()
+                res.status(200).json( {data: getChallenges} )
             } 
             catch (error) {
                 res.status(200).json( {error: "Fail to render challenges"} )
@@ -40,8 +40,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         case 'POST':
             try {
                 const createdChallenge = challengeDataMapper(req.body)
-                const challenge = await ChallengeModel.create(createdChallenge)
-                res.status(202).json( {data: challenge} )
+                const postChallenge = await ChallengeModel.create(createdChallenge)
+                res.status(202).json( {data: postChallenge} )
             }
             catch(err) {
                 const errorObject: {error: any} = {error: err}

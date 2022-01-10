@@ -8,6 +8,7 @@ import style from './challenges.module.scss'
 
 interface Props {
     addChallenge(challengeThis: String, challengeThat: String, created: Date) :void
+    error: Object
 }
 
 const InputChallenges: FC<Props> = ( {addChallenge} ) => {
@@ -56,6 +57,7 @@ const InputChallenges: FC<Props> = ( {addChallenge} ) => {
                     name="challengeThat"
                 />
             </form>
+
             <button className={style.button} type="submit" onClick={saveInputs}>
                 <Image className={style.image} src="/Add_round_fill.png" alt="Logo" width="36" height="36" />
             </button>
