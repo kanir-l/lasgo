@@ -1,6 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import React, { useState } from 'react'
-import router from 'next/router'
+import React from 'react'
 // Components
 import Header from '../../components/Header'
 import Challenges from '../../components/Challenges'
@@ -8,12 +7,10 @@ import Challenges from '../../components/Challenges'
 import { 
     createAcknowledgementByPickedChallenge, 
     deleteChallengeById, 
-    renderAllChallenges,
-    renderProfileByUserName, 
-} from '../../services/api'
+    renderAllChallenges
+} from '../../services/user'
 // Interfaces
 import { ChallengeInterface, ProfileInterface } from '../../interfaces/Profile'
-import { Error } from '../../interfaces/Error'
 // Styles
 import styles from '../../styles/Home.module.css'
 
@@ -21,10 +18,13 @@ import styles from '../../styles/Home.module.css'
 interface Props {
     allChallenges: ChallengeInterface[]
     user: ProfileInterface
-    
+    currentUser : {
+        id: number,
+        userName: string
+    }
 }
 
-const user: NextPage<Props> = ({ allChallenges, user }) => {
+const user: NextPage<Props> = ({ allChallenges, user, currentUser }) => {
     // MyChallenges
     const deleteChallenge = async (challengeId: number) => {
         try {
@@ -53,7 +53,7 @@ const user: NextPage<Props> = ({ allChallenges, user }) => {
    
     return (
         <div className={styles.profilepagecontainer}>
-            <Header profile={user} />
+            <Header profile={user} currentUser={currentUser}/>
            
             <div className={styles.challenges}>
                 <Challenges 
@@ -68,11 +68,8 @@ const user: NextPage<Props> = ({ allChallenges, user }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    /* const queryUser = String(context.query.profile) 
-
-    const resProfile = await renderProfileByUserName(queryUser)
-    const dataProfile = await resProfile?.json()
-    const profile = dataProfile.data   */
+    const currentUserCookie = context.req.cookies.currentUser
+    const currentUser = JSON.parse(currentUserCookie)
 
     const resAllChallenges = await renderAllChallenges()
     const dataAllChallenges = await resAllChallenges?.json()
@@ -81,7 +78,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             /* user: profile[0], */
-            allChallenges: allChallenges
+            allChallenges: allChallenges,
+            currentUser: currentUser
         }
     }
 }

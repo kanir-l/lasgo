@@ -2,6 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import React, { useState } from 'react'
 import router from 'next/router'
 import Link from 'next/link'
+
 // Components
 import Header from '../../../components/Header'
 import Profile from '../../../components/Profile'
@@ -12,7 +13,7 @@ import {
     deleteUserProfile, 
     renderProfileByUserName, 
     updateAcknowledgementByIdWithNewPick
-} from '../../../services/api'
+} from '../../../services/user'
 // Interfaces
 import { ProfileInterface } from '../../../interfaces/Profile'
 import { Error } from '../../../interfaces/Error'
@@ -21,10 +22,14 @@ import styles from '../../../styles/Home.module.css'
 
 
 interface Props {
-    user: ProfileInterface
+    user: ProfileInterface,
+    currentUser: {
+        id: number, 
+        userName: string
+    }
 }
 
-const user: NextPage<Props> = ({ user }) => {
+const user: NextPage<Props> = ({ user, currentUser }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [errors, setErrors] = useState<Error>({
         challengeThis: { message: "" },
@@ -65,8 +70,8 @@ const user: NextPage<Props> = ({ user }) => {
      
     return (
         <div className={styles.profilepagecontainer}>
-            <Header profile={user}/>
-
+            <Header profile={user} currentUser={currentUser}/>
+            
             <Profile profile={user} removeProfile={deleteUser}/>
            
             <div className={styles.topiccontainer}>
@@ -85,9 +90,11 @@ const user: NextPage<Props> = ({ user }) => {
             </div> 
             <div className={styles.acknowledgements}>
                 <Acknowledgements 
-                    acknowledgements={user.myAcknowledgements} 
+                    /* acknowledgements={user.myAcknowledgements} */ 
                     removeAcknowledgement={deleteAcknowledgement}
                     editAcknowledgement={updateAcknowledgement}
+                    user={user}
+                    currentUser={currentUser}
                 /> 
                 {/* .filter((acknowledgement) => (acknowledgement.challenge.byUser !== user._id)) */}
             </div>
@@ -96,6 +103,10 @@ const user: NextPage<Props> = ({ user }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+      // if there is no current user, redirect to login page
+    // if there is a user, include it in the props
+    const currentUserCookie = context.req.cookies.currentUser
+    const currentUser = JSON.parse(currentUserCookie)
     const queryUser = String(context.query.profile)
 
     const res = await renderProfileByUserName(queryUser)
@@ -104,7 +115,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   
     return {
         props: {
-            user: profile[0]
+            user: profile[0],
+            currentUser: currentUser
         }
     }
 }

@@ -13,22 +13,25 @@ import {
     createChallengeFromInput, 
     deleteChallengeById, 
     deleteUserProfile, 
-    renderProfileByUserName, 
-    updateAcknowledgementByIdWithNewPick
-} from '../../../../services/api'
+    renderProfileByUserName 
+} from '../../../../services/user'
 // Interfaces
 import { ProfileInterface } from '../../../../interfaces/Profile'
 import { Error } from '../../../../interfaces/Error'
 // Styles
 import styles from '../../../../styles/Home.module.css'
-import { linkSync } from 'fs'
+
 
 
 interface Props {
     user: ProfileInterface
+    currentUser: {
+        id: number,
+        userName: string
+    }
 }
 
-const user: NextPage<Props> = ({ user }) => {
+const user: NextPage<Props> = ({ user, currentUser }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter()
 
@@ -101,7 +104,7 @@ const user: NextPage<Props> = ({ user }) => {
      
     return (
         <div className={styles.profilepagecontainer}>
-            <Header profile={user} />
+            <Header profile={user} currentUser={currentUser}/>
 
             <Profile profile={user} removeProfile={deleteUser}/>
            
@@ -138,6 +141,8 @@ const user: NextPage<Props> = ({ user }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    const currentUserCookie = context.req.cookies.currentUser
+    const currentUser = JSON.parse(currentUserCookie)
     const queryUser = String(context.query.profile)
 
     const res = await renderProfileByUserName(queryUser)
@@ -146,7 +151,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   
     return {
         props: {
-            user: profile[0]
+            user: profile[0],
+            currentUser: currentUser
         }
     }
 }

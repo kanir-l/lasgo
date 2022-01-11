@@ -6,7 +6,7 @@
         width: 80%;
         margin: 1em 0em;
 
-        .this, .that {
+        .myThis, .myThat {
             width: auto;
             height: 2.81em;
             padding: 0 2em;
@@ -18,7 +18,7 @@
             cursor: pointer;
         }
 
-        .picked {
+        .myPicked {
             width: auto;
             height: 2.81em;
             padding: 0 2em;
@@ -29,7 +29,7 @@
             border-radius: 5px;
         }
         //Ohter Profiles
-        .otherThis, .otherThat {
+        .this, .that {
             width: auto;
             height: 2.81em;
             padding: 0 2em;
@@ -38,10 +38,9 @@
             background: rgb(255, 255, 255);
             border: solid 1px rgb(205, 138, 75);
             border-radius: 5px;
-            cursor: pointer;
         }
 
-        .otherPicked {
+        .picked {
             width: auto;
             height: 2.81em;
             padding: 0 2em;
@@ -65,7 +64,6 @@
     }
 
     .byuser {
-        width: 20%;
         margin: auto;
         
         p {

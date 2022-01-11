@@ -97,7 +97,7 @@ const SignupForm: FC<Props> = ( {addForm, errors} ) => {
                 <input 
                     className={style.input}
                     id="password" 
-                    type="text" 
+                    type="password" 
                     autoComplete="name" 
                     required 
                     placeholder="Password"

@@ -1,9 +1,10 @@
-import React, { FC, FormEvent } from 'react'
+import React, { FC } from 'react'
 import Image from 'next/image'
 // Interfaces
 import { AcknowledgementInterface, ChallengeInterface, ProfileInterface } from '../../interfaces/Profile'
 // Styles
 import style from './challenges.module.scss'
+import Link from 'next/link'
 
 
 interface Props {
@@ -68,7 +69,9 @@ const Challenges: FC<Props> = ( {user, challenges, removeChallenge, acknowledged
                     </button>
 
                     <div className={style.byuser}>
-                        <p>{challenge.byUser.userName}</p>
+                        <Link href={`/profile/${challenge.byUser.userName}`} passHref>
+                            <p>{challenge.byUser.userName}</p>
+                        </Link>
                         <p>{challenge.created}</p>
                     </div>
                 </div>

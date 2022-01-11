@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 // Styles
 import style from './profile.module.scss'
 import { ProfileInterface } from '../../interfaces/Profile'
@@ -22,7 +23,10 @@ const Profile: FC<Props> = ( {profile, removeProfile} ) => {
     return (
         <div className={style.profile}>
             <div className={style.box}>
-                <div className={style.image}>Image</div>
+                <div className={style.image}>
+                    <Image src="/default-image.png" alt="Logo" width="110"
+                    height="110" />
+                </div>
             </div>
             <div className={style.info}>
                 <h1>
