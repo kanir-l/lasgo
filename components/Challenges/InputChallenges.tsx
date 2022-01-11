@@ -1,9 +1,10 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from 'react'
 import Image from 'next/image'
 // Interfaces
-import { ChallengeInterface } from '../../interfaces/Profile'
+import { ChallengeInterface, ProfileInterface } from '../../interfaces/Profile'
 // Styles
 import style from './challenges.module.scss'
+import { ObjectId } from 'mongodb'
 
 
 interface Props {
@@ -17,7 +18,7 @@ const InputChallenges: FC<Props> = ( {addChallenge} ) => {
         challengeThis: "",
         challengeThat: "",
         created: new Date(),
-        byUser: 0
+        byUser: {} as ProfileInterface
     })
 
     const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {

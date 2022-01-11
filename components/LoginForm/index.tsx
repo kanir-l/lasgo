@@ -1,30 +1,21 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FC, FormEvent, SyntheticEvent, useState } from 'react'
 import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
 import style from './loginform.module.scss'
 
 interface Props {
-    loginDetails(
-        userName: string,
-        password: string
-    ): void
+    loginDetails(userName: string, password: string): void
 }
 
 const LoginForm: FC<Props> = ({ loginDetails }) => {
-    const [form, setForm] = useState<ProfileInterface>({
-        firstName: "",
-        lastName: "",
-        userName: "",
-        email: "",
-        password: ""
-    })
+    const [form, setForm] = useState<ProfileInterface>({} as ProfileInterface)
 
     const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
         let name = e.target.name
         setForm({...form, [name]: e.target.value})
     }
 
-    const saveInputs = (e: FormEvent) => {
+    const saveInputs = (e: SyntheticEvent) => {
         e.preventDefault()
         loginDetails(form.userName, form.password)
     }

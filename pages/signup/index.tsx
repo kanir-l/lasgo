@@ -6,10 +6,10 @@ import Head from 'next/head'
 import router from 'next/router'
 // Components
 import SignupForm from '../../components/SignupForm'
+// Services
+import { createProfileFromSignUp } from '../../services/user'
 // Styles
 import styles from '../../styles/Home.module.css'
-// Services
-import { createProfileFromSignUp } from '../../services/api'
 
 
 const Signup: NextPage = () => {
@@ -25,7 +25,7 @@ const Signup: NextPage = () => {
         try {
             const signUp = await createProfileFromSignUp(firstName, lastName, userName, email, password, accountCreated)
             if(signUp?.ok) {
-                router.push(`/profile/${userName}`)
+                router.push(`/profile/login`)
             } else {
                 if(signUp){
                     const response = await signUp.json();

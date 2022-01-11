@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { connect } from '../../../utils/mongoDB'
 // Models
 import ProfileModel from '../../../models/ProfileSchema'
-import Profile from '../../../components/Profile'
+
 
 
 type Data = {
