@@ -29,9 +29,10 @@ interface Props {
         id: number,
         userName: string
     }
+    currentProfile: ProfileInterface
 }
 
-const user: NextPage<Props> = ({ user, currentUser }) => {
+const user: NextPage<Props> = ({ user, currentUser, currentProfile }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter()
 
@@ -85,7 +86,7 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
     // myAcknowledgements
     const createAcknowledgement = async (challengeId: number, pickedChallenge: string) => {
         try {
-            const acknowledgement = await createAcknowledgementByPickedChallenge(challengeId, pickedChallenge, user._id)
+            const acknowledgement = await createAcknowledgementByPickedChallenge(challengeId, pickedChallenge, currentUser.id)
             if(acknowledgement?.ok) {
                 router.push(`/profile/${user.userName}/challenges`)
             } else {
@@ -106,7 +107,7 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
         <div className={styles.profilepagecontainer}>
             <Header profile={user} currentUser={currentUser}/>
 
-            <Profile profile={user} removeProfile={deleteUser}/>
+            <Profile profile={user} currentUser={currentUser} removeProfile={deleteUser}/>
            
             <div className={styles.topiccontainer}>
                 <ul>
@@ -128,10 +129,15 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
             </div> 
 
             <div className={styles.challenges}>
-                <InputChallenges addChallenge={createChallenge} error={errors}/>
+                {currentUser.userName === user.userName ? 
+                    <InputChallenges addChallenge={createChallenge} error={errors}/> :
+                    null
+                }
                 <Challenges 
                     user={user}
-                    challenges={user.myChallenges} 
+                    currentUser={currentUser}
+                    currentProfile={currentProfile}
+                    challenges={user.myChallenges}
                     removeChallenge={deleteChallenge} 
                     acknowledgedChallenge={createAcknowledgement}
                 />
@@ -143,16 +149,21 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const currentUserCookie = context.req.cookies.currentUser
     const currentUser = JSON.parse(currentUserCookie)
-    const queryUser = String(context.query.profile)
 
-    const res = await renderProfileByUserName(queryUser)
-    const data = await res?.json()
-    const profile = data.data
+    const queryUser = String(context.query.profile)
+    const resUser = await renderProfileByUserName(queryUser)
+    const dataUser = await resUser?.json()
+    const profile = dataUser.data
+
+    const resCurrentUser = await renderProfileByUserName(currentUser.userName)
+    const dataCurrentUser = await resCurrentUser?.json()
+    const currentProfile = dataCurrentUser.data
   
     return {
         props: {
             user: profile[0],
-            currentUser: currentUser
+            currentUser: currentUser,
+            currentProfile: currentProfile[0]
         }
     }
 }

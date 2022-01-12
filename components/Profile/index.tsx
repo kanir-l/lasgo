@@ -8,10 +8,14 @@ import { ProfileInterface } from '../../interfaces/Profile'
 
 interface Props {
     profile: ProfileInterface,
+    currentUser: {
+        id: number,
+        userName: string
+    }
     removeProfile(profileId: number): void
 }
 
-const Profile: FC<Props> = ( {profile, removeProfile} ) => {
+const Profile: FC<Props> = ( {profile, currentUser, removeProfile} ) => {
 
     const countAcknowledgements = profile.myAcknowledgements.length 
     const countChallenges = profile.myChallenges.length 
@@ -46,10 +50,13 @@ const Profile: FC<Props> = ( {profile, removeProfile} ) => {
                         </Link>
                     }
                 </div>
-                <p>{profile.firstName}</p>
+                <p>{profile.firstName}&nbsp;{profile.lastName}</p>
                 <p>{profile.about}</p>
             </div>
-            <button className={style.button} onClick={() => handleRemove(profile._id)}>Delete</button>
+            {currentUser.userName === profile.userName ? 
+                <button className={style.button} onClick={() => handleRemove(profile._id)}>Delete</button> :
+                null
+            }
         </div> 
     ) 
 }

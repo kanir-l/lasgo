@@ -1,22 +1,21 @@
 import React, { FC } from 'react'
 import Image from 'next/image'
 // Interfaces
-import { AcknowledgementInterface, ProfileInterface } from '../../interfaces/Profile'
+import { ProfileInterface } from '../../interfaces/Profile'
 // Styles
 import style from './acknowledgements.module.scss'
-import user from '../../pages/profile/[profile]'
 import Link from 'next/link'
 
 
 interface Props {
     /* acknowledgements: AcknowledgementInterface[], */
-    removeAcknowledgement(acknowledgementId: number): void
-    editAcknowledgement(acknowledgementId: number, picked: string): void
     user: ProfileInterface
     currentUser: {
         id: number,
         userName: string
     }
+    removeAcknowledgement(acknowledgementId: number): void
+    editAcknowledgement(acknowledgementId: number, picked: string): void
 }
 
 const Acknowledgements: FC<Props> = ( {/* acknowledgements */ removeAcknowledgement, editAcknowledgement, user, currentUser} ) => {
@@ -34,6 +33,7 @@ const Acknowledgements: FC<Props> = ( {/* acknowledgements */ removeAcknowledgem
                 <div className={style.acknowledgements}>
 
                 {currentUser.userName === user.userName ? 
+                /* My profile */
                 <>
                     <div className={style.info}>
                         {acknowledgement.picked === acknowledgement.challenge.challengeThis ? 
@@ -66,10 +66,12 @@ const Acknowledgements: FC<Props> = ( {/* acknowledgements */ removeAcknowledgem
                     </button>
 
                     <div className={style.byuser}>
-                        <p>{acknowledgement.challenge.byUser.userName}</p>
-                        {/* <p>{acknowledgement.challenge.created}</p> */}
+                        <Link href={`/profile/${acknowledgement.challenge.byUser.userName}`} passHref> 
+                            <p>By {acknowledgement.challenge.byUser.userName}</p>
+                        </Link> 
                     </div>
-                </> :
+                </> : 
+                /* Other profiles */
                 <>
                     <div className={style.info}>
                         {acknowledgement.picked === acknowledgement.challenge.challengeThis ? 
@@ -97,15 +99,10 @@ const Acknowledgements: FC<Props> = ( {/* acknowledgements */ removeAcknowledgem
                         }
                     </div> 
 
-                    {/* <button className={style.button} type="submit" onClick={() => handleRemove(acknowledgement._id)} >
-                        <Image className={style.image} src="/Remove_fill.png" alt="Logo" width="36" height="36" />
-                    </button> */}
-
                     <div className={style.byuser}>
-                    <Link href={`/profile/${acknowledgement.challenge.byUser.userName}`} passHref> 
-                        <p>{acknowledgement.challenge.byUser.userName}</p>
-                    </Link> 
-                        {/* <p>{acknowledgement.challenge.created}</p> */}
+                        <Link href={`/profile/${acknowledgement.challenge.byUser.userName}`} passHref> 
+                            <p>By {acknowledgement.challenge.byUser.userName}</p>
+                        </Link> 
                     </div>
                 </>
                 }

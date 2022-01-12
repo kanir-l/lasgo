@@ -8,15 +8,18 @@ import Link from 'next/link'
 
 
 interface Props {
-    user?: ProfileInterface
-
-    challenges: ChallengeInterface[],
+    user: ProfileInterface
+    currentUser: {
+        id: number,
+        userName: string
+    }
+    currentProfile?: ProfileInterface
+    challenges: ChallengeInterface[]
     removeChallenge(challengeId: number): void
- 
     acknowledgedChallenge(challengeId: number, pickedChallenge: string): void
 }
 
-const Challenges: FC<Props> = ( {user, challenges, removeChallenge, acknowledgedChallenge} ) => {
+const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, removeChallenge, acknowledgedChallenge} ) => {
     const handleRemove = (challengeId: number) => {
         removeChallenge(challengeId)
     }
@@ -25,21 +28,22 @@ const Challenges: FC<Props> = ( {user, challenges, removeChallenge, acknowledged
         acknowledgedChallenge(challengeId, pickedChallenge)
     }
 
-    // Making an object for keeping myAcknowledgement id key and a picked string value
-    const acknowledgedChallenges: any = {}
-    user?.myAcknowledgements.forEach( (acknowledgement: AcknowledgementInterface) => {
-        acknowledgedChallenges[acknowledgement.challenge._id] = acknowledgement.picked
-    })
+    // Making an object for keeping myAcknowledgement id key and a picked string value for the current login profile
+    const currentUserAcknowledgedChallenges: any = {}
+    currentProfile?.myAcknowledgements.forEach( (acknowledgement: AcknowledgementInterface) => {
+        currentUserAcknowledgedChallenges[acknowledgement.challenge._id] = acknowledgement.picked
+    }) 
+
+    //TO DO, Change onclick on the user's myChallenges to happen/add to the current user's myAcknowledgements instead
 
     const renderChallenges = challenges.map((challenge, index) => {
         return (
             <div key={index}>
                 <div className={style.challenges}>
+                {/* {currentUser.userName === user.userName ?  */}
+                
                     <div className={style.info}>
-                        {/* If the acknowledgeChallenge's key which is from "myAcknowledgements -> challenge._id" 
-                        that has the string value that from "myAcknowledgements -> picked" 
-                        is the same as myChallenges -> challengeThis, then take the className of style.picked */}
-                        {acknowledgedChallenges[challenge._id] === challenge.challengeThis ? 
+                        {currentUserAcknowledgedChallenges[challenge._id] === challenge.challengeThis ? 
                             <button disabled className={style.picked}>
                                 {challenge.challengeThis}
                             </button>
@@ -52,7 +56,7 @@ const Challenges: FC<Props> = ( {user, challenges, removeChallenge, acknowledged
 
                         <p className={style.line}>|</p>
 
-                        {acknowledgedChallenges[challenge._id] === challenge.challengeThat ? 
+                        {currentUserAcknowledgedChallenges[challenge._id] === challenge.challengeThat ? 
                             <button disabled className={style.picked}>
                                 {challenge.challengeThat}
                             </button>
@@ -70,10 +74,12 @@ const Challenges: FC<Props> = ( {user, challenges, removeChallenge, acknowledged
 
                     <div className={style.byuser}>
                         <Link href={`/profile/${challenge.byUser.userName}`} passHref>
-                            <p>{challenge.byUser.userName}</p>
+                            <p>By {challenge.byUser.userName}</p>
                         </Link>
-                        <p>{challenge.created}</p>
                     </div>
+                
+                
+                
                 </div>
             </div>
         )
