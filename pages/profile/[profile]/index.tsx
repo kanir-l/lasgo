@@ -2,7 +2,6 @@ import type { GetServerSideProps, NextPage } from 'next'
 import React, { useState } from 'react'
 import router from 'next/router'
 import Link from 'next/link'
-
 // Components
 import Header from '../../../components/Header'
 import Profile from '../../../components/Profile'
@@ -72,7 +71,7 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
         <div className={styles.profilepagecontainer}>
             <Header profile={user} currentUser={currentUser}/>
             
-            <Profile profile={user} removeProfile={deleteUser}/>
+            <Profile profile={user} currentUser={currentUser} removeProfile={deleteUser}/>
            
             <div className={styles.topiccontainer}>
                 <ul>
@@ -90,28 +89,24 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
             </div> 
             <div className={styles.acknowledgements}>
                 <Acknowledgements 
-                    /* acknowledgements={user.myAcknowledgements} */ 
-                    removeAcknowledgement={deleteAcknowledgement}
-                    editAcknowledgement={updateAcknowledgement}
                     user={user}
                     currentUser={currentUser}
+                    removeAcknowledgement={deleteAcknowledgement}
+                    editAcknowledgement={updateAcknowledgement}
                 /> 
-                {/* .filter((acknowledgement) => (acknowledgement.challenge.byUser !== user._id)) */}
             </div>
         </div>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-      // if there is no current user, redirect to login page
-    // if there is a user, include it in the props
     const currentUserCookie = context.req.cookies.currentUser
     const currentUser = JSON.parse(currentUserCookie)
-    const queryUser = String(context.query.profile)
 
-    const res = await renderProfileByUserName(queryUser)
-    const data = await res?.json()
-    const profile = data.data
+    const queryUser = String(context.query.profile)
+    const resUser = await renderProfileByUserName(queryUser)
+    const dataUser = await resUser?.json()
+    const profile = dataUser.data
   
     return {
         props: {

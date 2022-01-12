@@ -7,7 +7,8 @@ import Challenges from '../../components/Challenges'
 import { 
     createAcknowledgementByPickedChallenge, 
     deleteChallengeById, 
-    renderAllChallenges
+    renderAllChallenges,
+    renderProfileByUserName
 } from '../../services/user'
 // Interfaces
 import { ChallengeInterface, ProfileInterface } from '../../interfaces/Profile'
@@ -57,6 +58,8 @@ const user: NextPage<Props> = ({ allChallenges, user, currentUser }) => {
            
             <div className={styles.challenges}>
                 <Challenges 
+                    user={user}
+                    currentUser={currentUser}
                     challenges={allChallenges} 
                     removeChallenge={deleteChallenge} 
                     acknowledgedChallenge={createAcknowledgement}
@@ -68,18 +71,22 @@ const user: NextPage<Props> = ({ allChallenges, user, currentUser }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    const queryUser = String(context.query.profile)
+    const resUser = await renderProfileByUserName(queryUser)
+    const dataUser = await resUser?.json()
+    const profile = dataUser.data
+
     const currentUserCookie = context.req.cookies.currentUser
     const currentUser = JSON.parse(currentUserCookie)
 
     const resAllChallenges = await renderAllChallenges()
     const dataAllChallenges = await resAllChallenges?.json()
     const allChallenges = dataAllChallenges.data
-
     return {
         props: {
-            /* user: profile[0], */
-            allChallenges: allChallenges,
-            currentUser: currentUser
+            user: profile[0],
+            currentUser: currentUser,
+            allChallenges: allChallenges
         }
     }
 }
