@@ -11,21 +11,23 @@ import {
     renderProfileByUserName
 } from '../../services/user'
 // Interfaces
-import { ChallengeInterface, ProfileInterface } from '../../interfaces/User'
+import { AcknowledgementInterface, ChallengeInterface, ProfileInterface } from '../../interfaces/User'
 // Styles
 import styles from '../../styles/Home.module.css'
+import Acknowledgements from '../../components/Acknowledgements'
 
 
 interface Props {
-    allChallenges: ChallengeInterface[]
     user: ProfileInterface
     currentUser : {
         id: number,
         userName: string
     }
+    currentProfile : ProfileInterface
+    allChallenges: ChallengeInterface[]
 }
 
-const user: NextPage<Props> = ({ allChallenges, user, currentUser }) => {
+const user: NextPage<Props> = ({ allChallenges, user, currentUser, currentProfile }) => {
     // MyChallenges
     const deleteChallenge = async (challengeId: number) => {
         try {
@@ -51,42 +53,53 @@ const user: NextPage<Props> = ({ allChallenges, user, currentUser }) => {
             console.log(error)
         }
     }
-   
-    return (
+
+    /* Get all un acknowledged challenges */
+    const currentAcknowledgedChallenges = currentProfile.myAcknowledgements.map((acknowledgement) => {
+        return acknowledgement.challenge._id
+    })
+    const renderUnAcknowledgedChallenges = allChallenges.filter((challenge) => {
+        return !currentAcknowledgedChallenges.includes(challenge._id)
+    }) 
+    
+
+   return (
         <div className={styles.profilepagecontainer}>
             <Header profile={user} currentUser={currentUser}/>
            
             <div className={styles.challenges}>
+                <p>All new/un-acknowledged challenges</p>
                 <Challenges 
-                    user={user}
+                    user={user} 
                     currentUser={currentUser}
-                    challenges={allChallenges} 
+                    currentProfile={currentProfile}
+                    challenges={renderUnAcknowledgedChallenges} 
                     removeChallenge={deleteChallenge} 
                     acknowledgedChallenge={createAcknowledgement}
                 />
             </div>
-            
         </div>
     )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const queryUser = String(context.query.profile)
-    const resUser = await renderProfileByUserName(queryUser)
-    const dataUser = await resUser?.json()
-    const profile = dataUser.data
-
     const currentUserCookie = context.req.cookies.currentUser
     const currentUser = JSON.parse(currentUserCookie)
+
+    const resCurrentUser = await renderProfileByUserName(currentUser.userName)
+    const dataCurrentUser = await resCurrentUser?.json()
+    const currentProfile = dataCurrentUser.data
 
     const resAllChallenges = await renderAllChallenges()
     const dataAllChallenges = await resAllChallenges?.json()
     const allChallenges = dataAllChallenges.data
+     
     return {
         props: {
-            user: profile[0],
+            user: "",
             currentUser: currentUser,
-            allChallenges: allChallenges
+            currentProfile: currentProfile[0],
+            allChallenges: allChallenges 
         }
     }
 }

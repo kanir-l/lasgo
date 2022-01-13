@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 mongoose.Promis = global.Promise
 const ProfileModel = require('./ProfileSchema')
+const AcknowledgementModel = require('./AcknowledgementSchema')
 
 const ChallengeSchema = new Schema({
     challengeThis: { type: String, minlength: 2, maxlength: 30 },
@@ -44,6 +45,18 @@ ChallengeSchema.pre('remove', async function(next) {
         ).clone()
     } catch (error) {
         console.error(error)
+    }
+})
+
+ChallengeSchema.pre('remove', async function(next) {
+    const self = this
+    try {
+        await AcknowledgementModel.deleteMany(
+            { challenge: self._id },
+            next
+        ).clone()
+    } catch (error) {
+        console.log(error)
     }
 })
 

@@ -50,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       try {
           const createdAcknowledgement = acknowledgementDataMapper(req.body)
           const existedAcknowledgement = await AcknowledgementModel.find({challenge: req.body.challenge, by: req.body.by})
-         
+
           if (existedAcknowledgement.length === 0) {
             const postAcknowledgement = await AcknowledgementModel.create(createdAcknowledgement)
             res.status(202).json( {data: postAcknowledgement} )
@@ -69,14 +69,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     case 'DELETE':
       try {
-          const deletedAcknowledgement = await AcknowledgementModel.findById(req.body, async function(err: object, acknowledgement: {remove: Function}){
-              return await acknowledgement.remove()              
-          }).clone()
-          res.status(200).json( {data: {deletedAcknowledgement}} )  
-      }
-      catch {
-          res.status(400).json( {error: "Failed to remove acknowledgements"} )
-      }
+        const deletedAcknowledgement = await AcknowledgementModel.findById(req.body, async function(err: object, acknowledgement: {remove: Function}){
+            return await acknowledgement.remove()              
+        }).clone()
+        res.status(200).json( {data: {deletedAcknowledgement}} )  
+    }
+    catch {
+        res.status(400).json( {error: "Failed to remove acknowledgements"} )
+    }
     break
 
     case 'PUT':

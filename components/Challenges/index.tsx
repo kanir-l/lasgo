@@ -31,17 +31,13 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
     // Making an object for keeping myAcknowledgement id key and a picked string value for the current login profile
     const currentUserAcknowledgedChallenges: any = {}
     currentProfile?.myAcknowledgements.forEach( (acknowledgement: AcknowledgementInterface) => {
-        currentUserAcknowledgedChallenges[acknowledgement.challenge._id] = acknowledgement.picked
+        currentUserAcknowledgedChallenges[acknowledgement.challenge?._id] = acknowledgement.picked
     }) 
-
-    //TO DO, Change onclick on the user's myChallenges to happen/add to the current user's myAcknowledgements instead
 
     const renderChallenges = challenges.map((challenge, index) => {
         return (
             <div key={index}>
-                <div className={style.challenges}>
-                {/* {currentUser.userName === user.userName ?  */}
-                
+                <div className={style.challenges}>  
                     <div className={style.info}>
                         {currentUserAcknowledgedChallenges[challenge._id] === challenge.challengeThis ? 
                             <button disabled className={style.picked}>
@@ -67,10 +63,13 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
                             </button>
                         }
                     </div> 
-
-                    <button className={style.button} type="submit" onClick={() => handleRemove(challenge._id)} >
-                        <Image className={style.image} src="/Remove_fill.png" alt="Logo" width="36" height="36" />
-                    </button>
+                    
+                    {currentUser.userName === user.userName ? 
+                        <button className={style.button} type="submit" onClick={() => handleRemove(challenge._id)} >
+                            <Image className={style.image} src="/Remove_fill.png" alt="Logo" width="36" height="36" />
+                        </button> :
+                        null
+                    }
 
                     <div className={style.byuser}>
                         <Link href={`/profile/${challenge.byUser.userName}`} passHref>

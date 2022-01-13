@@ -33,12 +33,12 @@ const Header: FC<Props> = ( {currentUser} ) => {
             </div>
             <div className={style.icons}>
                 <Link href={`/home`} passHref>
-                    <Image src="/home-icon.png" alt="Logo" width="26"
-                    height="26" />
+                    <Image src="/home-icon.png" alt="Logo" width="23"
+                    height="23" />
                 </Link>
                 <Link href={`/profile/${currentUser.userName}`} passHref>
-                    <Image src="/user-icon.png" alt="Logo" width="26"
-                    height="26" />
+                    <Image src="/user-icon.png" alt="Logo" width="22"
+                    height="22" />
                 </Link>
 
                 <p className={style.logout} onClick={handleSignout}>Logout</p>

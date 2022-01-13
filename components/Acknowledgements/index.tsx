@@ -36,7 +36,7 @@ const Acknowledgements: FC<Props> = ( {/* acknowledgements */ removeAcknowledgem
                 /* My profile */
                 <>
                     <div className={style.info}>
-                        {acknowledgement.picked === acknowledgement.challenge.challengeThis ? 
+                        {acknowledgement.picked === acknowledgement.challenge?.challengeThis ? 
                             <button disabled className={style.myPicked}>
                                 {acknowledgement.challenge.challengeThis}
                             </button> 
@@ -49,7 +49,7 @@ const Acknowledgements: FC<Props> = ( {/* acknowledgements */ removeAcknowledgem
 
                         <p className={style.line}>|</p>
 
-                        {acknowledgement.picked === acknowledgement.challenge.challengeThat ? 
+                        {acknowledgement.picked === acknowledgement.challenge?.challengeThat ? 
                             <button disabled className={style.myPicked}>
                                 {acknowledgement.challenge.challengeThat}
                             </button> 
@@ -66,8 +66,8 @@ const Acknowledgements: FC<Props> = ( {/* acknowledgements */ removeAcknowledgem
                     </button>
 
                     <div className={style.byuser}>
-                        <Link href={`/profile/${acknowledgement.challenge.byUser.userName}`} passHref> 
-                            <p>By{acknowledgement.challenge.byUser.userName}</p>
+                        <Link href={`/profile/${acknowledgement.challenge?.byUser.userName}`} passHref> 
+                            <p>By {acknowledgement.challenge.byUser.userName}</p>
                         </Link> 
                     </div>
                 </> : 

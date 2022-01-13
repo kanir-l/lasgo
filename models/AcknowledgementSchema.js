@@ -50,4 +50,3 @@ AcknowledgementSchema.pre('remove', async function(next) {
 const AcknowledgementModel = mongoose.models.acknowledgement || (mongoose.model('acknowledgement', AcknowledgementSchema))
 
 module.exports = AcknowledgementModel;
-

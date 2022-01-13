@@ -107,6 +107,11 @@
   padding: 3em 0; 
 }
 
+.challenges p {
+  color: rgb(209, 209, 209);
+  margin-bottom: 3em;
+}
+
 /* myAcknowledgements */
 .acknowledgements {
   width: 80%;
