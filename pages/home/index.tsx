@@ -11,7 +11,7 @@ import {
     renderProfileByUserName
 } from '../../services/user'
 // Interfaces
-import { ChallengeInterface, ProfileInterface } from '../../interfaces/Profile'
+import { ChallengeInterface, ProfileInterface } from '../../interfaces/User'
 // Styles
 import styles from '../../styles/Home.module.css'
 

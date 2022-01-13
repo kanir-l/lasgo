@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 // Styles
 import style from './profile.module.scss'
-import { ProfileInterface } from '../../interfaces/Profile'
+import { ProfileInterface } from '../../interfaces/User'
 
 
 interface Props {

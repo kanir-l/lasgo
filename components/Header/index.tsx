@@ -1,11 +1,12 @@
-import React, { FC, FormEvent } from 'react'
+import React, { FC, FormEvent, SyntheticEvent } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Router from 'next/router'
 // Interfaces
-import { ProfileInterface } from '../../interfaces/Profile'
+import { ProfileInterface } from '../../interfaces/User'
 // Styles
 import style from './header.module.scss'
+import { logOutUser } from '../../services/auth'
 
 
 interface Props {
@@ -16,9 +17,10 @@ interface Props {
     }
 }
 
-const Header: FC<Props> = ( {profile, currentUser} ) => {
-    const handleSignout = (e: FormEvent) => {
+const Header: FC<Props> = ( {currentUser} ) => {
+    const handleSignout = (e: SyntheticEvent) => {
         e.preventDefault()
+        logOutUser()
         Router.push("/login")
     }
     return (

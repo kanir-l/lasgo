@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 // Interfaces
-import { SignUpInterface } from '../../interfaces/Profile'
+import { SignUpInterface } from '../../interfaces/User'
 // Styles
 import style from './signupform.module.scss'
 

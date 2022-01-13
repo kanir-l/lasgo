@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC, FormEvent, SyntheticEvent, useState } from 'react'
-import { ProfileInterface } from '../../interfaces/Profile'
+import { ProfileInterface } from '../../interfaces/User'
 // Styles
 import style from './loginform.module.scss'
 
@@ -38,7 +38,7 @@ const LoginForm: FC<Props> = ({ loginDetails }) => {
                 <input 
                     className={style.input}
                     id="password" 
-                    type="text" 
+                    type="password"  
                     autoComplete="name" 
                     required 
                     placeholder="Password"
