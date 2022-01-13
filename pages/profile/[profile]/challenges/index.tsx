@@ -16,7 +16,7 @@ import {
     renderProfileByUserName 
 } from '../../../../services/user'
 // Interfaces
-import { ProfileInterface } from '../../../../interfaces/Profile'
+import { ProfileInterface } from '../../../../interfaces/User'
 import { Error } from '../../../../interfaces/Error'
 // Styles
 import styles from '../../../../styles/Home.module.css'
@@ -113,14 +113,14 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile }) => {
                 <ul>
                     <li>
                         <Link href={`/profile/${user.userName}/acknowledgements`} passHref>
-                            <a className={router.pathname == "/profile/[profile]/acknowledgements" ? styles.active : ""}>
+                            <a className={router.pathname == "/profile/[profile]/acknowledgements" ? styles.activeA : ""}>
                                 My Acknowledgements
                             </a>
                         </Link>
                     </li>
                     <li>
                         <Link href={`/profile/${user.userName}/challenges`} passHref>
-                            <a className={router.pathname == "/profile/[profile]/challenges" ? styles.active : ""}>
+                            <a className={router.pathname == "/profile/[profile]/challenges" ? styles.activeC : ""}>
                                 My Challenges
                             </a>
                         </Link>

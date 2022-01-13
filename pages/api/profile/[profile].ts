@@ -7,7 +7,7 @@ import ProfileModel from '../../../models/ProfileSchema'
 import ChallengeModel from '../../../models/ChallengeSchema'
 import AcknowledgementModel from '../../../models/AcknowledgementSchema'
 // Interfaces
-import { ProfileInterface } from '../../../interfaces/Profile'
+import { ProfileInterface } from '../../../interfaces/User'
 
 
 type Data = {

@@ -14,7 +14,7 @@ import {
     updateAcknowledgementByIdWithNewPick
 } from '../../../services/user'
 // Interfaces
-import { ProfileInterface } from '../../../interfaces/Profile'
+import { ProfileInterface } from '../../../interfaces/User'
 import { Error } from '../../../interfaces/Error'
 // Styles
 import styles from '../../../styles/Home.module.css'
@@ -99,9 +99,10 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
     )
 }
 
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const currentUserCookie = context.req.cookies.currentUser
-    const currentUser = JSON.parse(currentUserCookie)
+    const currentUser = JSON.parse(currentUserCookie) 
 
     const queryUser = String(context.query.profile)
     const resUser = await renderProfileByUserName(queryUser)

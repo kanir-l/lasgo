@@ -15,6 +15,8 @@ const Login: NextPage = () => {
     const logIn = (userName: string, password: string) => {
        logInToProfile(userName, password)
        router.push(`/profile/${userName}`)
+
+       console.log(userName, password)
     }
 
     return (

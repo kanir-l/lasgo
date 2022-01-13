@@ -86,9 +86,15 @@
   margin-right: 1.6em;
 }
 
-.active {
+.activeA {
   color:rgb(0, 0, 0);
-  border-top: 1px solid rgb(0, 0, 0);
+  border-top: 1px solid rgb(0, 111, 96);
+  padding-top: 1em;
+}
+
+.activeC {
+  color:rgb(0, 0, 0);
+  border-top: 1px solid rgb(205, 138, 75);
   padding-top: 1em;
 }
 

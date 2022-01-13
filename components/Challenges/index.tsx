@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import Image from 'next/image'
 // Interfaces
-import { AcknowledgementInterface, ChallengeInterface, ProfileInterface } from '../../interfaces/Profile'
+import { AcknowledgementInterface, ChallengeInterface, ProfileInterface } from '../../interfaces/User'
 // Styles
 import style from './challenges.module.scss'
 import Link from 'next/link'
@@ -77,9 +77,6 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
                             <p>By {challenge.byUser.userName}</p>
                         </Link>
                     </div>
-                
-                
-                
                 </div>
             </div>
         )

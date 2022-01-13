@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import Image from 'next/image'
 // Interfaces
-import { ProfileInterface } from '../../interfaces/Profile'
+import { ProfileInterface } from '../../interfaces/User'
 // Styles
 import style from './acknowledgements.module.scss'
 import Link from 'next/link'
@@ -67,7 +67,7 @@ const Acknowledgements: FC<Props> = ( {/* acknowledgements */ removeAcknowledgem
 
                     <div className={style.byuser}>
                         <Link href={`/profile/${acknowledgement.challenge.byUser.userName}`} passHref> 
-                            <p>By {acknowledgement.challenge.byUser.userName}</p>
+                            <p>By{acknowledgement.challenge.byUser.userName}</p>
                         </Link> 
                     </div>
                 </> : 

@@ -25,7 +25,7 @@ const Signup: NextPage = () => {
         try {
             const signUp = await createProfileFromSignUp(firstName, lastName, userName, email, password, accountCreated)
             if(signUp?.ok) {
-                router.push(`/profile/login`)
+                router.push(`/login`)
             } else {
                 if(signUp){
                     const response = await signUp.json();
