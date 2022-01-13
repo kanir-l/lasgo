@@ -14,8 +14,8 @@ import {
     updateAcknowledgementByIdWithNewPick
 } from '../../../../services/user'
 // Interfaces
-import { ProfileInterface } from '../../../../interfaces/Profile'
 import { Error } from '../../../../interfaces/Error'
+import { ProfileInterface } from '../../../../interfaces/User'
 // Styles
 import styles from '../../../../styles/Home.module.css'
 

@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 // Interfaces
 import { AcknowledgementInterface, ChallengeInterface, ProfileInterface } from '../../interfaces/User'
 // Styles
 import style from './challenges.module.scss'
-import Link from 'next/link'
 
 
 interface Props {
