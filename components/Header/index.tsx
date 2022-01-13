@@ -1,7 +1,7 @@
 import React, { FC, FormEvent, SyntheticEvent } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import Router from 'next/router'
+import router from 'next/router'
 // Interfaces
 import { ProfileInterface } from '../../interfaces/User'
 // Styles
@@ -21,8 +21,9 @@ const Header: FC<Props> = ( {currentUser} ) => {
     const handleSignout = (e: SyntheticEvent) => {
         e.preventDefault()
         logOutUser()
-        Router.push("/login")
+        router.push("/login")
     }
+
     return (
         <div className={style.header}>
             <div className={style.logolight}>

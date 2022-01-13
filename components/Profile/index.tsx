@@ -1,9 +1,11 @@
 import React, { FC } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+// Interfaces
+import { ProfileInterface } from '../../interfaces/User'
 // Styles
 import style from './profile.module.scss'
-import { ProfileInterface } from '../../interfaces/User'
+
 
 
 interface Props {

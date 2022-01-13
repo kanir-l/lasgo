@@ -14,7 +14,6 @@ import {
 import { AcknowledgementInterface, ChallengeInterface, ProfileInterface } from '../../interfaces/User'
 // Styles
 import styles from '../../styles/Home.module.css'
-import Acknowledgements from '../../components/Acknowledgements'
 
 
 interface Props {
@@ -61,8 +60,9 @@ const user: NextPage<Props> = ({ allChallenges, user, currentUser, currentProfil
     const renderUnAcknowledgedChallenges = allChallenges.filter((challenge) => {
         return !currentAcknowledgedChallenges.includes(challenge._id)
     }) 
-    
 
+    //TODO : fix to acknowledge the challenges on the home page
+    
    return (
         <div className={styles.profilepagecontainer}>
             <Header profile={user} currentUser={currentUser}/>

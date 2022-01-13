@@ -10,7 +10,7 @@ interface Props {
 
 const Button: FC<Props> = ({ title, link }) => {
     return (
-        <Link href={link} data-testid="card-link" passHref>
+        <Link href={link} passHref>
             <button className={style.button} >
                 {title}
             </button>

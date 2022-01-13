@@ -8,7 +8,6 @@ import Link from 'next/link'
 
 
 interface Props {
-    /* acknowledgements: AcknowledgementInterface[], */
     user: ProfileInterface
     currentUser: {
         id: number,
@@ -18,7 +17,7 @@ interface Props {
     editAcknowledgement(acknowledgementId: number, picked: string): void
 }
 
-const Acknowledgements: FC<Props> = ( {/* acknowledgements */ removeAcknowledgement, editAcknowledgement, user, currentUser} ) => {
+const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgement, user, currentUser} ) => {
     const handleRemove = (acknowledgementId: number) => {
         removeAcknowledgement(acknowledgementId)
     }
