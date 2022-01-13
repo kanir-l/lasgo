@@ -11,6 +11,7 @@ import InputChallenges from '../../../../components/Challenges/InputChallenges'
 import { 
     createAcknowledgementByPickedChallenge, 
     createChallengeFromInput, 
+    deleteAcknowledgementById, 
     deleteChallengeById, 
     deleteUserProfile, 
     renderProfileByUserName 
@@ -87,6 +88,7 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile }) => {
     const createAcknowledgement = async (challengeId: number, pickedChallenge: string) => {
         try {
             const acknowledgement = await createAcknowledgementByPickedChallenge(challengeId, pickedChallenge, currentUser.id)
+            
             if(acknowledgement?.ok) {
                 router.push(`/profile/${user.userName}/challenges`)
             } else {

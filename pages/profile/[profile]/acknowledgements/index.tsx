@@ -14,7 +14,7 @@ import {
     updateAcknowledgementByIdWithNewPick
 } from '../../../../services/user'
 // Interfaces
-import { ProfileInterface } from '../../../../interfaces/User'
+import { ProfileInterface } from '../../../../interfaces/Profile'
 import { Error } from '../../../../interfaces/Error'
 // Styles
 import styles from '../../../../styles/Home.module.css'
@@ -87,7 +87,7 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
                     </li>
                     <li>
                         <Link href={`/profile/${user.userName}/challenges`} passHref>
-                            <a className={router.pathname == "/profile/[profile]/challenges" ? styles.activeC : ""}>
+                            <a className={router.pathname == "/profile/[profile]/challenges" ? styles.activeA : ""}>
                                 My Challenges
                             </a>
                         </Link>

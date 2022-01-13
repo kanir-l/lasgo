@@ -59,7 +59,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         case 'DELETE':
             try {
                 const deletedChallenge = await ChallengeModel.findById(req.body, async function(err: object, challenge: {remove: Function}){
-                    return await challenge.remove()              
+                    return challenge.remove()              
                 }).clone()
                 res.status(200).json( {data: {deletedChallenge}} )  
             }

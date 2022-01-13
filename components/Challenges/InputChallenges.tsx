@@ -29,6 +29,13 @@ const InputChallenges: FC<Props> = ( {addChallenge} ) => {
     const saveInputs = (e: FormEvent) => {
         e.preventDefault()
         addChallenge(form.challengeThis, form.challengeThat, form.created)
+        setForm({
+            _id: 0,
+            challengeThis: "",
+            challengeThat: "",
+            created: new Date(),
+            byUser: {} as ProfileInterface
+        })
     }
     
     return (
@@ -54,7 +61,7 @@ const InputChallenges: FC<Props> = ( {addChallenge} ) => {
                     required 
                     placeholder="That"
                     value={form.challengeThat}
-                    onChange={handleInputs}
+                    onChange={handleInputs} 
                     name="challengeThat"
                 />
             </form>
