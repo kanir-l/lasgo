@@ -14,6 +14,7 @@ import {
 import { AcknowledgementInterface, ChallengeInterface, ProfileInterface } from '../../interfaces/User'
 // Styles
 import styles from '../../styles/Home.module.css'
+import router from 'next/router'
 
 
 interface Props {
@@ -41,9 +42,9 @@ const user: NextPage<Props> = ({ allChallenges, user, currentUser, currentProfil
     // myAcknowledgements
     const createAcknowledgement = async (challengeId: number, pickedChallenge: string) => {
         try {
-            const acknowledgement = await createAcknowledgementByPickedChallenge(challengeId, pickedChallenge, user._id)
+            const acknowledgement = await createAcknowledgementByPickedChallenge(challengeId, pickedChallenge, currentUser.id)
             if(acknowledgement?.ok) {
-                /* router.push(`/profile/${user.userName}`) */
+                router.push(`/home`) 
             } else {
                 throw "Something went wrong that we couldn't recover from."
             }
@@ -60,8 +61,6 @@ const user: NextPage<Props> = ({ allChallenges, user, currentUser, currentProfil
     const renderUnAcknowledgedChallenges = allChallenges.filter((challenge) => {
         return !currentAcknowledgedChallenges.includes(challenge._id)
     }) 
-
-    //TODO : fix to acknowledge the challenges on the home page
     
    return (
         <div className={styles.profilepagecontainer}>

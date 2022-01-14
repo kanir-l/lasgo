@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lily+Script+One&family=Work+Sans:wght@100;200;400&display=swap');
 // Challenges 
 /* Mobile */
 .challenges {
@@ -9,6 +10,7 @@
         margin: 1em 0em;
 
         .this, .that {
+            font-family: 'Work Sans', sans-serif;
             width: auto;
             height: 2.81em;
             padding: 0 2em;
@@ -21,6 +23,7 @@
         }
 
         .picked {
+            font-family: 'Work Sans', sans-serif;
             width: auto;
             height: 2.81em;
             padding: 0 2em;

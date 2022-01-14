@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lily+Script+One&family=Work+Sans:wght@100;200;400&display=swap');
+
 .acknowledgements {
     display: flex;
     justify-content: space-between;
@@ -7,6 +9,7 @@
         margin: 1em 0em;
 
         .myThis, .myThat {
+            font-family: 'Work Sans', sans-serif;
             width: auto;
             height: 2.81em;
             padding: 0 2em;
@@ -19,6 +22,7 @@
         }
 
         .myPicked {
+            font-family: 'Work Sans', sans-serif;
             width: auto;
             height: 2.81em;
             padding: 0 2em;
@@ -30,6 +34,7 @@
         }
         //Ohter Profiles
         .this, .that {
+            font-family: 'Work Sans', sans-serif;
             width: auto;
             height: 2.81em;
             padding: 0 2em;
@@ -41,6 +46,7 @@
         }
 
         .picked {
+            font-family: 'Work Sans', sans-serif;
             width: auto;
             height: 2.81em;
             padding: 0 2em;
