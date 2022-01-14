@@ -11,16 +11,17 @@ import InputChallenges from '../../../../components/Challenges/InputChallenges'
 import { 
     createAcknowledgementByPickedChallenge, 
     createChallengeFromInput, 
-    deleteAcknowledgementById, 
     deleteChallengeById, 
     deleteUserProfile, 
+    readAllAcknowledgements, 
     renderProfileByUserName 
 } from '../../../../services/user'
 // Interfaces
-import { ProfileInterface } from '../../../../interfaces/User'
+import { AcknowledgementInterface, ProfileInterface } from '../../../../interfaces/User'
 import { Error } from '../../../../interfaces/Error'
 // Styles
 import styles from '../../../../styles/Home.module.css'
+import Acknowledgements from '../../../../components/Acknowledgements'
 
 
 
@@ -165,7 +166,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
             user: profile[0],
             currentUser: currentUser,
-            currentProfile: currentProfile[0]
+            currentProfile: currentProfile[0],
         }
     }
 }

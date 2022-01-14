@@ -144,5 +144,15 @@ export async function updateAcknowledgementByIdWithNewPick(acknowledgementId: nu
     }
 }
 
+export async function readAllAcknowledgements() {
+    try {
+        const data = await fetch(`http://localhost:3000/api/acknowledgements`)
+        return data
+    }
+    catch (err) {
+        console.log("Could not fetch the data from the database")
+    }
+}  
+
 
 

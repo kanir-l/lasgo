@@ -17,8 +17,20 @@
             color: rgb(0, 111, 96);
             background: rgb(255, 255, 255);
             border: solid 1px rgb(0, 111, 96);
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
+        }
+
+        .myThis:hover, .myThat:hover{
+            color: rgb(255, 255, 255);
+            background: rgb(0, 62, 54);
+            border: 1px solid rgb(255, 255, 255);
+            outline: 1px solid rgb(0, 111, 96);
+        }
+
+        .myThis:active, .myThis:active {
+            top: 0.1em;
+            transition: all 0.3s;
         }
 
         .myPicked {
@@ -30,7 +42,7 @@
             color: rgb(255, 255, 255);
             background: rgb(0, 111, 96);
             border: solid 1px rgb(0, 111, 96);
-            border-radius: 5px;
+            border-radius: 6px;
         }
         //Ohter Profiles
         .this, .that {
@@ -54,12 +66,13 @@
             color: rgb(255, 255, 255);
             background: rgb(0, 111, 96);
             border: solid 1px rgb(0, 111, 96);
-            border-radius: 5px;
+            border-radius: 6px;
         }
 
         .line {
             visibility: hidden;
             margin: 0;
+            line-height: 00.6rem;
         }
     }
 
@@ -72,13 +85,15 @@
     .byuser {
         width: 12%;
         display: flex;
-        justify-content: flex-end;
-        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
         
         p {
             font-size: 0.75rem;
             color: rgb(201, 201, 201);
             line-height: 0.6rem;
+            margin: 0;
             cursor: pointer;
         }
     }

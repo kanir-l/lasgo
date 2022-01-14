@@ -19,8 +19,13 @@
         align-items: center;
         cursor: pointer;
 
+        .actives {
+            border-top: 1px solid black;
+        }
+
         .logout {
-            color:rgb(201, 201, 201);
+            font-size: 0.8rem;
+            color:rgb(205, 138, 75);
             cursor: pointer;
         }
     }
