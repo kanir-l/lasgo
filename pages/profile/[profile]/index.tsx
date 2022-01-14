@@ -103,7 +103,7 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const currentUserCookie = context.req.cookies.currentUser
     const currentUser = JSON.parse(currentUserCookie) 
-    
+
     const queryUser = String(context.query.profile)
     const resUser = await renderProfileByUserName(queryUser)
     const dataUser = await resUser?.json()
