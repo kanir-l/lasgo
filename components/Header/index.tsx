@@ -1,7 +1,7 @@
 import React, { FC, FormEvent, SyntheticEvent } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import router from 'next/router'
+import { useRouter } from 'next/router'
 // Interfaces
 import { ProfileInterface } from '../../interfaces/User'
 // Styles
@@ -18,6 +18,8 @@ interface Props {
 }
 
 const Header: FC<Props> = ( {currentUser} ) => {
+    const router = useRouter()
+    
     const handleSignout = (e: SyntheticEvent) => {
         e.preventDefault()
         logOutUser()
@@ -34,12 +36,14 @@ const Header: FC<Props> = ( {currentUser} ) => {
             </div>
             <div className={style.icons}>
                 <Link href={`/home`} passHref>
-                    <Image src="/home-icon.png" alt="Logo" width="23"
-                    height="23" />
+                     <div className={router.pathname == "/home" ? style.actives : ""}> 
+                        <Image src="/home-icon.png" alt="Logo" width="23" height="23" />
+                    </div> 
                 </Link>
                 <Link href={`/profile/${currentUser.userName}`} passHref>
-                    <Image src="/user-icon.png" alt="Logo" width="22"
-                    height="22" />
+                    <div className={router.pathname == "/profile/[profile]" ? style.actives : ""}>
+                        <Image src="/user-icon.png" alt="Logo" width="22" height="22" />
+                    </div>
                 </Link>
 
                 <p className={style.logout} onClick={handleSignout}>Logout</p>

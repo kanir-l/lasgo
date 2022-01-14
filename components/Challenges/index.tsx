@@ -37,7 +37,7 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
     const renderChallenges = challenges.map((challenge, index) => {
         return (
             <div key={index}>
-                <div className={style.challenges}>  
+                <div className={style.challenges}>
                     <div className={style.info}>
                         {currentUserAcknowledgedChallenges[challenge._id] === challenge.challengeThis ? 
                             <button disabled className={style.picked}>
@@ -75,7 +75,8 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
                         <Link href={`/profile/${challenge.byUser.userName}`} passHref>
                             <p>By {challenge.byUser.userName}</p>
                         </Link>
-                    </div>
+                        <p>3 users</p>
+                    </div> 
                 </div>
             </div>
         )

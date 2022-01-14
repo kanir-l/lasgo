@@ -7,6 +7,7 @@ import Challenges from '../../components/Challenges'
 import { 
     createAcknowledgementByPickedChallenge, 
     deleteChallengeById, 
+    readAllAcknowledgements, 
     renderAllChallenges,
     renderProfileByUserName
 } from '../../services/user'
@@ -27,7 +28,7 @@ interface Props {
     allChallenges: ChallengeInterface[]
 }
 
-const user: NextPage<Props> = ({ allChallenges, user, currentUser, currentProfile }) => {
+const user: NextPage<Props> = ({ user, currentUser, currentProfile, allChallenges }) => {
     // MyChallenges
     const deleteChallenge = async (challengeId: number) => {
         try {
@@ -65,17 +66,19 @@ const user: NextPage<Props> = ({ allChallenges, user, currentUser, currentProfil
    return (
         <div className={styles.profilepagecontainer}>
             <Header profile={user} currentUser={currentUser}/>
-           
+
             <div className={styles.challenges}>
-                <p>All new/un-acknowledged challenges</p>
-                <Challenges 
-                    user={user} 
-                    currentUser={currentUser}
-                    currentProfile={currentProfile}
-                    challenges={renderUnAcknowledgedChallenges} 
-                    removeChallenge={deleteChallenge} 
-                    acknowledgedChallenge={createAcknowledgement}
-                />
+                <p>All new challenges</p>
+                {renderUnAcknowledgedChallenges.length === 0 ? <i>No more new challenges </i> : 
+                    <Challenges 
+                        user={user} 
+                        currentUser={currentUser}
+                        currentProfile={currentProfile}
+                        challenges={renderUnAcknowledgedChallenges} 
+                        removeChallenge={deleteChallenge} 
+                        acknowledgedChallenge={createAcknowledgement}
+                    />
+                }
             </div>
         </div>
     )
@@ -98,7 +101,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             user: "",
             currentUser: currentUser,
             currentProfile: currentProfile[0],
-            allChallenges: allChallenges 
+            allChallenges: allChallenges
         }
     }
 }
