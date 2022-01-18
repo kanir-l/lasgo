@@ -109,7 +109,7 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile, allAcknowled
      
     return (
         <div className={styles.profilepagecontainer}>
-            <Header profile={user} currentUser={currentUser}/>
+            <Header currentUser={currentUser}/>
 
             <Profile profile={user} currentUser={currentUser} removeProfile={deleteUser}/>
            

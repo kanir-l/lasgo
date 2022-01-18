@@ -67,7 +67,7 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile, allChallenge
 
    return (
         <div className={styles.profilepagecontainer}>
-            <Header profile={user} currentUser={currentUser} />
+            <Header currentUser={currentUser} />
 
             <div className={styles.challenges}>
                 <p>All new challenges</p>
