@@ -17,9 +17,10 @@ interface Props {
     challenges: ChallengeInterface[]
     removeChallenge(challengeId: number): void
     acknowledgedChallenge(challengeId: number, pickedChallenge: string): void
+    allAcknowledgements?: AcknowledgementInterface[]
 }
 
-const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, removeChallenge, acknowledgedChallenge} ) => {
+const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, removeChallenge, acknowledgedChallenge, allAcknowledgements} ) => {
     const handleRemove = (challengeId: number) => {
         removeChallenge(challengeId)
     }
@@ -33,6 +34,16 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
     currentProfile?.myAcknowledgements.forEach( (acknowledgement: AcknowledgementInterface) => {
         currentUserAcknowledgedChallenges[acknowledgement.challenge?._id] = acknowledgement.picked
     }) 
+
+    // Counting acknowledgment times on the challenge
+    const acknowledgedChallenges = allAcknowledgements?.map((acknowledgement) => {
+        return acknowledgement.challenge._id
+    })
+
+    const counts: any = {} 
+    acknowledgedChallenges?.forEach((id) => { 
+        counts[id] = (counts[id] || 0) + 1
+    })
 
     const renderChallenges = challenges.map((challenge, index) => {
         return (
@@ -73,9 +84,14 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
 
                     <div className={style.byuser}>
                         <Link href={`/profile/${challenge.byUser.userName}`} passHref>
-                            <p>By {challenge.byUser.userName}</p>
+                            <a>
+                                <p>By {challenge.byUser.userName}</p>
+                            </a>
                         </Link>
-                        <p>3 users</p>
+                        { counts[challenge._id] ? 
+                            <i>{counts[challenge._id]} acknowledge(s)</i> : 
+                            <i>0 acknowledge(s)</i>
+                        }
                     </div> 
                 </div>
             </div>

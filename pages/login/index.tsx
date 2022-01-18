@@ -15,8 +15,6 @@ const Login: NextPage = () => {
     const logIn = (userName: string, password: string) => {
        logInToProfile(userName, password)
        router.push(`/profile/${userName}`)
-
-       console.log(userName, password)
     }
 
     return (
@@ -29,8 +27,9 @@ const Login: NextPage = () => {
             
             <div className={styles.logodark}>
                 <Link href="/" passHref>
-                    <Image src="/Lasgo-dark.png" alt="Logo" width="185"
-                    height="78" />
+                    <a>
+                        <Image src="/Lasgo-dark.png" alt="Logo" width="185" height="78" />
+                    </a>
                 </Link>
             </div>
             <div className={styles.homecontainer}>
@@ -41,3 +40,5 @@ const Login: NextPage = () => {
 }
 
 export default Login
+
+

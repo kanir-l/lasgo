@@ -2,6 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import React, { useState } from 'react'
 import router from 'next/router'
 import Link from 'next/link'
+import Error from '../../_error'
 // Components
 import Header from '../../../components/Header'
 import Profile from '../../../components/Profile'
@@ -10,12 +11,12 @@ import Acknowledgements from '../../../components/Acknowledgements'
 import { 
     deleteAcknowledgementById, 
     deleteUserProfile, 
+    readAllAcknowledgements, 
     renderProfileByUserName, 
     updateAcknowledgementByIdWithNewPick
 } from '../../../services/user'
 // Interfaces
-import { ProfileInterface } from '../../../interfaces/User'
-import { Error } from '../../../interfaces/Error'
+import { AcknowledgementInterface, ProfileInterface } from '../../../interfaces/User'
 // Styles
 import styles from '../../../styles/Home.module.css'
 
@@ -26,15 +27,20 @@ interface Props {
         id: number, 
         userName: string
     }
+    allAcknowledgements: AcknowledgementInterface[]
 }
 
-const user: NextPage<Props> = ({ user, currentUser }) => {
+const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [errors, setErrors] = useState<Error>({
         challengeThis: { message: "" },
         challengeThat: { message: "" }
-    })
+    }) 
 
+    if (!user) {
+        return <Error statusCode={404} />;
+    }
+ 
     // User/Profile
     const deleteUser = async (userId: number) => {
         try {
@@ -77,12 +83,12 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
                 <ul>
                     <li>
                         <Link href={`/profile/${user.userName}/acknowledgements`} passHref>
-                            My Acknowledgements
+                            <a>My Acknowledgements</a>
                         </Link>
                     </li>
                     <li>
                         <Link href={`/profile/${user.userName}/challenges`} passHref>
-                            My Challenges
+                            <a>My Challenges</a>
                         </Link>
                     </li>
                 </ul>
@@ -93,6 +99,7 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
                     currentUser={currentUser}
                     removeAcknowledgement={deleteAcknowledgement}
                     editAcknowledgement={updateAcknowledgement}
+                    allAcknowledgements={allAcknowledgements}
                 /> 
             </div>
         </div>
@@ -102,17 +109,37 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const currentUserCookie = context.req.cookies.currentUser
-    const currentUser = JSON.parse(currentUserCookie) 
-
+    if(!currentUserCookie) {
+        return {
+            notFound: true
+        }
+    } 
+    const currentUser = JSON.parse(currentUserCookie)
+  
     const queryUser = String(context.query.profile)
     const resUser = await renderProfileByUserName(queryUser)
     const dataUser = await resUser?.json()
-    const profile = dataUser.data
-  
+    let profile = dataUser.data
+    if(!profile) {
+        return {
+            notFound: true
+        }
+    }
+
+    const resAllAcknowledgements = await readAllAcknowledgements()
+    const dataAllAcknowledgements = await resAllAcknowledgements?.json()
+    const allAcknowledgements = dataAllAcknowledgements.data
+    if(!allAcknowledgements) {
+        return {
+            notFound: true
+        }
+    }
+    
     return {
         props: {
             user: profile[0],
-            currentUser: currentUser
+            currentUser: currentUser,
+            allAcknowledgements: allAcknowledgements
         }
     }
 }

@@ -13,12 +13,11 @@ interface Props {
     currentUser: {
         id: number,
         userName: string
-    }
+    },
     removeProfile(profileId: number): void
 }
 
 const Profile: FC<Props> = ( {profile, currentUser, removeProfile} ) => {
-
     const countAcknowledgements = profile.myAcknowledgements.length 
     const countChallenges = profile.myChallenges.length 
  
@@ -37,7 +36,7 @@ const Profile: FC<Props> = ( {profile, currentUser, removeProfile} ) => {
             <div className={style.info}>
                 <h1>
                     <Link href={`/profile/${profile.userName}`} passHref>
-                        {profile.userName}
+                        <a>{profile.userName}</a>
                     </Link>
                 </h1>
                 <div className={style.activities}>

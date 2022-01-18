@@ -50,8 +50,9 @@ const Signup: NextPage = () => {
 
             <div className={styles.logodark}>
                 <Link href="/" passHref>
-                    <Image src="/Lasgo-dark.png" alt="Logo" width="185"
-                    height="78" />
+                    <a>
+                        <Image src="/Lasgo-dark.png" alt="Logo" width="185" height="78" />
+                    </a>
                 </Link>
             </div>
             <div className={styles.homecontainer}>

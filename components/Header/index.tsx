@@ -30,20 +30,25 @@ const Header: FC<Props> = ( {currentUser} ) => {
         <div className={style.header}>
             <div className={style.logolight}>
                 <Link href={`/profile/${currentUser.userName}`} passHref>
-                    <Image src="/Lasgo-light.png" alt="Logo" width="145"
-                    height="60" />
+                    <a>
+                        <Image src="/Lasgo-light.png" alt="Logo" width="145" height="60" />
+                    </a>
                 </Link>
             </div>
             <div className={style.icons}>
                 <Link href={`/home`} passHref>
-                     <div className={router.pathname == "/home" ? style.actives : ""}> 
-                        <Image src="/home-icon.png" alt="Logo" width="23" height="23" />
-                    </div> 
+                     <a>
+                         <div className={router.pathname == "/home" ? style.actives : ""}> 
+                            <Image src="/home-icon.png" alt="Logo" width="23" height="23" />
+                        </div> 
+                    </a>
                 </Link>
                 <Link href={`/profile/${currentUser.userName}`} passHref>
-                    <div className={router.pathname == "/profile/[profile]" ? style.actives : ""}>
-                        <Image src="/user-icon.png" alt="Logo" width="22" height="22" />
-                    </div>
+                    <a>
+                        <div className={router.pathname == "/profile/[profile]" ? style.actives : ""}>
+                            <Image src="/user-icon.png" alt="Logo" width="22" height="22" />
+                        </div>
+                    </a>
                 </Link>
 
                 <p className={style.logout} onClick={handleSignout}>Logout</p>
