@@ -13,7 +13,8 @@ import {
     deleteUserProfile, 
     readAllAcknowledgements, 
     renderProfileByUserName, 
-    updateAcknowledgementByIdWithNewPick
+    updateAcknowledgementByIdWithNewPick,
+    updateProfileWithImage
 } from '../../../services/user'
 // Interfaces
 import { AcknowledgementInterface, ProfileInterface } from '../../../interfaces/User'
@@ -31,21 +32,25 @@ interface Props {
 }
 
 const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [errors, setErrors] = useState<Error>({
-        challengeThis: { message: "" },
-        challengeThat: { message: "" }
-    }) 
-
     if (!user) {
         return <Error statusCode={404} />;
     }
  
-    // User/Profile
+    // Profile - Delete
     const deleteUser = async (userId: number) => {
         try {
             await deleteUserProfile(userId)
             router.push('/')
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+    // Profile - Update with image
+    const updateImage = async (file: File) => {
+        try {
+            await updateProfileWithImage(file, currentUser.id)
+            router.push(`/profile/${user.userName}`)
         }
         catch (error) {
             console.log(error)
@@ -75,9 +80,9 @@ const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
      
     return (
         <div className={styles.profilepagecontainer}>
-            <Header profile={user} currentUser={currentUser}/>
+            <Header currentUser={currentUser}/>
             
-            <Profile profile={user} currentUser={currentUser} removeProfile={deleteUser}/>
+            <Profile profile={user} currentUser={currentUser} removeProfile={deleteUser} uploadImage={updateImage}/>
            
             <div className={styles.topiccontainer}>
                 <ul>

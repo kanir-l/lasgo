@@ -57,6 +57,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         }
     break
 
+    case 'PUT':
+    try {
+      const putImage = await ProfileModel.findByIdAndUpdate(req.body.currentUserId, {image: req.body.file})
+      res.status(202).json( {data: putImage} ) 
+    }
+    catch(err) {
+        const errorObject: {error: any} = {error: err}
+        res.status(400).json( errorObject )
+    }
+break
+
     default: 
     res.status(400).json( {error: "Failed"} )
   }

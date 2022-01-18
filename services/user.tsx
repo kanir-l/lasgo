@@ -44,6 +44,37 @@ export async function deleteUserProfile(userId: number) {
     }
 }
 
+export async function updateProfileWithImage(file: File, currentUserId: number) {
+    return new Promise((resolve, reject) => {
+        try {
+            const reader = new FileReader()
+            ///
+            reader.onloadend = async () => {
+                const image = reader.result
+                const data = await fetch(`http://localhost:3000/api/profile`, {
+                    method: 'PUT',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({file: image, currentUserId: currentUserId})
+                })
+                resolve(data)
+            }
+            reader.onerror = (err) => {
+                console.error('There was an issue', {err})
+                reject('Couldn\'t read file')
+            }
+            ///
+            reader.readAsDataURL(file)
+        }
+        catch (err) {
+            console.log("Could not update the profile with the image", err)
+            reject("Could not update the profile with the image")
+        }
+    })
+}
+
+
 //myChallenges
 export async function createChallengeFromInput(challengeThis: string, challengeThat: string, created: Date, byUser: number) {
     // Creating needs to match the property names with model/database

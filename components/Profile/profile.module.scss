@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lily+Script+One&family=Work+Sans:wght@100;200;400&display=swap');
+
 .profile {
     width: 80%;
     border-bottom: 1px solid rgb(209, 209, 209);
@@ -14,13 +16,53 @@
         .image {
             width: 10.30em;
             height: 10.30em;
-            color:rgb(232, 232, 232);
             background: rgb(232, 232, 232);
             border: 1px solid rgb(232, 232, 232);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            overflow: hidden;
+
+            .form {  
+                width: 10.30em;
+                padding: 3.7em;
+                position: absolute;
+
+                button {
+                    font-family: 'Work Sans', sans-serif;
+                    font-size: 10pt;
+                    color:rgb(209, 209, 209);
+                    background: rgb(205, 138, 75);
+                    border: none;
+                    border-radius: 50px;
+                    padding: 0.3em 0.6em;
+                    display: inline-block;
+                    cursor: pointer;
+                }
+                
+                .customfileinput::-webkit-file-upload-button {
+                    visibility: hidden;
+                }
+                .customfileinput::before {
+                    content: '+';
+                    font-family: 'Work Sans', sans-serif;
+                    font-size: 30pt;
+                    color:rgb(255, 255, 255);
+                    background: transparent;
+                    padding: 0 0.3em;
+                    display: inline-block;
+                    cursor: pointer;
+                }
+                .customfileinput:hover::before {
+                    color:rgb(205, 138, 75);
+                }
+                .customfileinput:active::before {
+                    background: -webkit-linear-gradient(top, rgb(209, 209, 209), rgb(201, 201, 201));
+                    color:rgb(0, 0, 0)
+                }
+            }
         }
     }
 

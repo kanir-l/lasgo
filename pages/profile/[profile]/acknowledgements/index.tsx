@@ -34,12 +34,6 @@ const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter()
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [errors, setErrors] = useState<Error>({
-        challengeThis: { message: "" },
-        challengeThat: { message: "" }
-    })
-
     // Profile
     const deleteUser = async (userId: number) => {
         try {
@@ -74,7 +68,7 @@ const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
 
     return (
         <div className={styles.profilepagecontainer}>
-            <Header profile={user} currentUser={currentUser}/>
+            <Header currentUser={currentUser}/>
 
             <Profile profile={user} currentUser={currentUser} removeProfile={deleteUser}/>
            
