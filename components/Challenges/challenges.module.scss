@@ -69,9 +69,15 @@
     
         p {
             font-size: 0.75rem;
-            color: rgb(201, 201, 201);
+            line-height: 0.6rem;
             margin: 0;
             cursor: pointer;
+        }
+
+        i {
+            font-size: 0.75rem;
+            color: rgb(201, 201, 201);
+            line-height: 1.3rem;
         }
     }
 }

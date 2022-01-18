@@ -10,12 +10,13 @@ import Acknowledgements from '../../../../components/Acknowledgements'
 import { 
     deleteAcknowledgementById, 
     deleteUserProfile, 
+    readAllAcknowledgements, 
     renderProfileByUserName, 
     updateAcknowledgementByIdWithNewPick
 } from '../../../../services/user'
 // Interfaces
 import { Error } from '../../../../interfaces/Error'
-import { ProfileInterface } from '../../../../interfaces/User'
+import { AcknowledgementInterface, ProfileInterface } from '../../../../interfaces/User'
 // Styles
 import styles from '../../../../styles/Home.module.css'
 
@@ -26,9 +27,10 @@ interface Props {
         id: number,
         userName: string
     }
+    allAcknowledgements: AcknowledgementInterface[]
 }
 
-const user: NextPage<Props> = ({ user, currentUser }) => {
+const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter()
 
@@ -69,7 +71,7 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
             console.log(error)
         }
     }
-     
+
     return (
         <div className={styles.profilepagecontainer}>
             <Header profile={user} currentUser={currentUser}/>
@@ -101,6 +103,7 @@ const user: NextPage<Props> = ({ user, currentUser }) => {
                     currentUser={currentUser}
                     removeAcknowledgement={deleteAcknowledgement}
                     editAcknowledgement={updateAcknowledgement}
+                    allAcknowledgements={allAcknowledgements}
                 /> 
             </div>
         </div>
@@ -115,11 +118,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const resUser = await renderProfileByUserName(queryUser)
     const dataUser = await resUser?.json()
     const profile = dataUser.data
+
+    const resAllAcknowledgements = await readAllAcknowledgements()
+    const dataAllAcknowledgements = await resAllAcknowledgements?.json()
+    const allAcknowledgements = dataAllAcknowledgements.data
   
     return {
         props: {
             user: profile[0],
-            currentUser: currentUser
+            currentUser: currentUser,
+            allAcknowledgements: allAcknowledgements
         }
     }
 }

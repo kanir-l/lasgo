@@ -32,9 +32,10 @@ interface Props {
         userName: string
     }
     currentProfile: ProfileInterface
+    allAcknowledgements: AcknowledgementInterface[]
 }
 
-const user: NextPage<Props> = ({ user, currentUser, currentProfile }) => {
+const user: NextPage<Props> = ({ user, currentUser, currentProfile, allAcknowledgements }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter()
 
@@ -143,6 +144,7 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile }) => {
                     challenges={user.myChallenges}
                     removeChallenge={deleteChallenge} 
                     acknowledgedChallenge={createAcknowledgement}
+                    allAcknowledgements={allAcknowledgements}
                 />
             </div>
         </div>
@@ -161,12 +163,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const resCurrentUser = await renderProfileByUserName(currentUser.userName)
     const dataCurrentUser = await resCurrentUser?.json()
     const currentProfile = dataCurrentUser.data
+
+    const resAllAcknowledgements = await readAllAcknowledgements()
+    const dataAllAcknowledgements = await resAllAcknowledgements?.json()
+    const allAcknowledgements = dataAllAcknowledgements.data
   
     return {
         props: {
             user: profile[0],
             currentUser: currentUser,
             currentProfile: currentProfile[0],
+            allAcknowledgements: allAcknowledgements
         }
     }
 }

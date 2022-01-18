@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, SyntheticEvent, useState } from 'react'
+import React, { ChangeEvent, FC, SyntheticEvent, useState } from 'react'
 import { ProfileInterface } from '../../interfaces/User'
 // Styles
 import style from './loginform.module.scss'

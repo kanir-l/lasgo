@@ -7,6 +7,7 @@ import Challenges from '../../components/Challenges'
 import { 
     createAcknowledgementByPickedChallenge, 
     deleteChallengeById, 
+    deleteUserProfile, 
     readAllAcknowledgements, 
     renderAllChallenges,
     renderProfileByUserName
@@ -26,9 +27,10 @@ interface Props {
     }
     currentProfile : ProfileInterface
     allChallenges: ChallengeInterface[]
+    allAcknowledgements: AcknowledgementInterface[]
 }
 
-const user: NextPage<Props> = ({ user, currentUser, currentProfile, allChallenges }) => {
+const user: NextPage<Props> = ({ user, currentUser, currentProfile, allChallenges, allAcknowledgements }) => {
     // MyChallenges
     const deleteChallenge = async (challengeId: number) => {
         try {
@@ -62,10 +64,10 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile, allChallenge
     const renderUnAcknowledgedChallenges = allChallenges.filter((challenge) => {
         return !currentAcknowledgedChallenges.includes(challenge._id)
     }) 
-    
+
    return (
         <div className={styles.profilepagecontainer}>
-            <Header profile={user} currentUser={currentUser}/>
+            <Header profile={user} currentUser={currentUser} />
 
             <div className={styles.challenges}>
                 <p>All new challenges</p>
@@ -77,6 +79,7 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile, allChallenge
                         challenges={renderUnAcknowledgedChallenges} 
                         removeChallenge={deleteChallenge} 
                         acknowledgedChallenge={createAcknowledgement}
+                        allAcknowledgements={allAcknowledgements}
                     />
                 }
             </div>
@@ -86,22 +89,42 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile, allChallenge
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const currentUserCookie = context.req.cookies.currentUser
+    if(!currentUserCookie) {
+        return {
+            notFound: true
+        }
+    }
     const currentUser = JSON.parse(currentUserCookie)
 
     const resCurrentUser = await renderProfileByUserName(currentUser.userName)
     const dataCurrentUser = await resCurrentUser?.json()
-    const currentProfile = dataCurrentUser.data
+    const currentProfile = dataCurrentUser?.data
 
     const resAllChallenges = await renderAllChallenges()
     const dataAllChallenges = await resAllChallenges?.json()
-    const allChallenges = dataAllChallenges.data
-     
+    const allChallenges = dataAllChallenges?.data
+    if(!allChallenges) {
+        return {
+            notFound: true
+        }
+    }
+
+    const resAllAcknowledgements = await readAllAcknowledgements()
+    const dataAllAcknowledgements = await resAllAcknowledgements?.json()
+    const allAcknowledgements = dataAllAcknowledgements.data
+    if(!allAcknowledgements) {
+        return {
+            notFound: true
+        }
+    }
+
     return {
         props: {
             user: "",
             currentUser: currentUser,
             currentProfile: currentProfile[0],
-            allChallenges: allChallenges
+            allChallenges: allChallenges,
+            allAcknowledgements: allAcknowledgements
         }
     }
 }

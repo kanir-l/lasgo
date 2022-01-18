@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import Image from 'next/image'
 // Interfaces
-import { ProfileInterface } from '../../interfaces/User'
+import { AcknowledgementInterface, ProfileInterface } from '../../interfaces/User'
 // Styles
 import style from './acknowledgements.module.scss'
 import Link from 'next/link'
@@ -15,9 +15,10 @@ interface Props {
     }
     removeAcknowledgement(acknowledgementId: number): void
     editAcknowledgement(acknowledgementId: number, picked: string): void
+    allAcknowledgements?: AcknowledgementInterface[]
 }
 
-const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgement, user, currentUser} ) => {
+const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgement, user, currentUser, allAcknowledgements} ) => {
     const handleRemove = (acknowledgementId: number) => {
         removeAcknowledgement(acknowledgementId)
     }
@@ -25,6 +26,14 @@ const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgemen
     const handleEdit = (acknowledgementId: number, picked: string) => {
         editAcknowledgement(acknowledgementId, picked)
     }
+
+    const acknowledgedChallenges = allAcknowledgements?.map((acknowledgement) => {
+        return acknowledgement.challenge._id
+    })
+    const counts: any = {}
+    acknowledgedChallenges?.forEach((id) => {
+        counts[id] = (counts[id] || 0) + 1
+    })
 
     const renderAcknowledgement = user.myAcknowledgements.map((acknowledgement, index) => { 
         return (
@@ -66,8 +75,11 @@ const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgemen
 
                     <div className={style.byuser}>
                         <Link href={`/profile/${acknowledgement.challenge?.byUser.userName}`} passHref> 
-                            <p>By {acknowledgement.challenge.byUser.userName}</p>
+                            <a>
+                                <p>By {acknowledgement.challenge.byUser.userName}</p>
+                            </a>
                         </Link> 
+                        <i>{counts[acknowledgement.challenge._id]} acknowledge(s)</i>
                     </div>
                 </> : 
                 /* Other profiles */
@@ -100,8 +112,11 @@ const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgemen
 
                     <div className={style.byuser}>
                         <Link href={`/profile/${acknowledgement.challenge.byUser.userName}`} passHref> 
-                            <p>By {acknowledgement.challenge.byUser.userName}</p>
+                            <a>
+                                <p>By {acknowledgement.challenge.byUser.userName}</p>
+                            </a>
                         </Link> 
+                        {counts === 0 ? 0 : <i>{counts[acknowledgement.challenge._id]} acknowledge(s)</i>}
                     </div>
                 </>
                 }
