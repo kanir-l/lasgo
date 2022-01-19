@@ -60,8 +60,8 @@ const Profile: FC<Props> = ( {profile, currentUser, removeProfile, uploadImage} 
                             />
                             {hide 
                                 ? <></> 
-                                : <button type="submit" onSubmit={submitImage}>
-                                    Save</button>}
+                                : <button type="submit" onSubmit={submitImage}>Save</button>
+                            }
                         </form>  
                     }   
                 </div>

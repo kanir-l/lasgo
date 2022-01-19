@@ -21,6 +21,7 @@ interface Props {
 }
 
 const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, removeChallenge, acknowledgedChallenge, allAcknowledgements} ) => {
+
     const handleRemove = (challengeId: number) => {
         removeChallenge(challengeId)
     }
@@ -39,7 +40,6 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
     const acknowledgedChallenges = allAcknowledgements?.map((acknowledgement) => {
         return acknowledgement.challenge._id
     })
-
     const counts: any = {} 
     acknowledgedChallenges?.forEach((id) => { 
         counts[id] = (counts[id] || 0) + 1
@@ -50,7 +50,8 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
             <div key={index}>
                 <div className={style.challenges}>
                     <div className={style.info}>
-                        {currentUserAcknowledgedChallenges[challenge._id] === challenge.challengeThis ? 
+                        {currentUserAcknowledgedChallenges[challenge._id] === challenge.challengeThis 
+                        ? 
                             <button disabled className={style.picked}>
                                 {challenge.challengeThis}
                             </button>
@@ -63,7 +64,8 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
 
                         <p className={style.line}>|</p>
 
-                        {currentUserAcknowledgedChallenges[challenge._id] === challenge.challengeThat ? 
+                        {currentUserAcknowledgedChallenges[challenge._id] === challenge.challengeThat 
+                        ? 
                             <button disabled className={style.picked}>
                                 {challenge.challengeThat}
                             </button>
@@ -75,19 +77,18 @@ const Challenges: FC<Props> = ( {user, challenges, currentUser, currentProfile, 
                         }
                     </div> 
                     
-                    {currentUser.userName === user.userName ? 
+                    {currentUser.userName === user.userName && 
                         <button className={style.button} type="submit" onClick={() => handleRemove(challenge._id)} >
                             <Image className={style.image} src="/Remove_fill.png" alt="Logo" width="36" height="36" />
-                        </button> :
-                        null
+                        </button> 
                     }
 
                     <div className={style.byuser}>
-                        <Link href={`/profile/${challenge.byUser.userName}`} passHref>
+                        <Link href={`/profile/${challenge.byUser.userName}`} passHref> 
                             <a>
                                 <p>By {challenge.byUser.userName}</p>
-                            </a>
-                        </Link>
+                            </a> 
+                        </Link> 
                         { counts[challenge._id] ? 
                             <i>{counts[challenge._id]} acknowledge(s)</i> : 
                             <i>0 acknowledge(s)</i>

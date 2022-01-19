@@ -47,8 +47,9 @@ export async function deleteUserProfile(userId: number) {
 export async function updateProfileWithImage(file: File, currentUserId: number) {
     return new Promise((resolve, reject) => {
         try {
+            // Make another FileReader Class
             const reader = new FileReader()
-            ///
+            // config our own fileReader's function
             reader.onloadend = async () => {
                 const image = reader.result
                 const data = await fetch(`http://localhost:3000/api/profile`, {
@@ -64,7 +65,7 @@ export async function updateProfileWithImage(file: File, currentUserId: number) 
                 console.error('There was an issue', {err})
                 reject('Couldn\'t read file')
             }
-            ///
+            /// Run another fileReader's function to tranform file to url
             reader.readAsDataURL(file)
         }
         catch (err) {
@@ -73,7 +74,6 @@ export async function updateProfileWithImage(file: File, currentUserId: number) 
         }
     })
 }
-
 
 //myChallenges
 export async function createChallengeFromInput(challengeThis: string, challengeThat: string, created: Date, byUser: number) {

@@ -14,7 +14,7 @@ const ChallengeSchema = new Schema({
     }
 })
 
-// Model functions
+// Model function to automatically save when the challenge is created byUser
 ChallengeSchema.post('save', true, async function(next) {
     const self = this
     try {
@@ -27,7 +27,7 @@ ChallengeSchema.post('save', true, async function(next) {
         console.error(error);
     }
 })
-
+// Model function to automatically remove when the challenge is created byUser
 ChallengeSchema.pre('remove', async function(next) {
     const self = this
     try {

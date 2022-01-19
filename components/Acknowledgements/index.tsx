@@ -19,6 +19,7 @@ interface Props {
 }
 
 const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgement, user, currentUser, allAcknowledgements} ) => {
+    
     const handleRemove = (acknowledgementId: number) => {
         removeAcknowledgement(acknowledgementId)
     }
@@ -40,11 +41,13 @@ const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgemen
             <div key={index}>
                 <div className={style.acknowledgements}>
 
-                {currentUser.userName === user.userName ? 
+                {currentUser.userName === user.userName 
+                ? 
                 /* My profile */
                 <>
                     <div className={style.info}>
-                        {acknowledgement.picked === acknowledgement.challenge?.challengeThis ? 
+                        {acknowledgement.picked === acknowledgement.challenge?.challengeThis 
+                        ? 
                             <button disabled className={style.myPicked}>
                                 {acknowledgement.challenge.challengeThis}
                             </button> 
@@ -57,7 +60,8 @@ const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgemen
 
                         <p className={style.line}>|</p>
 
-                        {acknowledgement.picked === acknowledgement.challenge?.challengeThat ? 
+                        {acknowledgement.picked === acknowledgement.challenge?.challengeThat 
+                        ? 
                             <button disabled className={style.myPicked}>
                                 {acknowledgement.challenge.challengeThat}
                             </button> 
@@ -81,11 +85,13 @@ const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgemen
                         </Link> 
                         <i>{counts[acknowledgement.challenge._id]} acknowledge(s)</i>
                     </div>
-                </> : 
+                </> 
+                : 
                 /* Other profiles */
                 <>
                     <div className={style.info}>
-                        {acknowledgement.picked === acknowledgement.challenge.challengeThis ? 
+                        {acknowledgement.picked === acknowledgement.challenge.challengeThis 
+                        ? 
                             <button disabled className={style.picked}>
                                 {acknowledgement.challenge.challengeThis}
                             </button> 
@@ -98,7 +104,8 @@ const Acknowledgements: FC<Props> = ( {removeAcknowledgement, editAcknowledgemen
 
                         <p className={style.line}>|</p>
 
-                        {acknowledgement.picked === acknowledgement.challenge.challengeThat ? 
+                        {acknowledgement.picked === acknowledgement.challenge.challengeThat 
+                        ? 
                             <button disabled className={style.picked}>
                                 {acknowledgement.challenge.challengeThat}
                             </button> 

@@ -1,5 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import React from 'react'
+import router from 'next/router'
+import React, { useReducer } from 'react'
 // Components
 import Header from '../../components/Header'
 import Challenges from '../../components/Challenges'
@@ -13,10 +14,13 @@ import {
     renderProfileByUserName
 } from '../../services/user'
 // Interfaces
-import { AcknowledgementInterface, ChallengeInterface, ProfileInterface } from '../../interfaces/User'
+import { 
+    AcknowledgementInterface, 
+    ChallengeInterface, 
+    ProfileInterface 
+} from '../../interfaces/User'
 // Styles
 import styles from '../../styles/Home.module.css'
-import router from 'next/router'
 
 
 interface Props {
@@ -65,7 +69,7 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile, allChallenge
         return !currentAcknowledgedChallenges.includes(challenge._id)
     }) 
 
-   return (
+    return (
         <div className={styles.profilepagecontainer}>
             <Header currentUser={currentUser} />
 
@@ -99,6 +103,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const resCurrentUser = await renderProfileByUserName(currentUser.userName)
     const dataCurrentUser = await resCurrentUser?.json()
     const currentProfile = dataCurrentUser?.data
+    if(!currentProfile) {
+        return {
+            notFound: true
+        }
+    }
 
     const resAllChallenges = await renderAllChallenges()
     const dataAllChallenges = await resAllChallenges?.json()

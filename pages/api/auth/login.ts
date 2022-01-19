@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import ProfileModel from '../../../models/ProfileSchema'
 // Utils
 import { connect } from '../../../utils/mongoDB'
+// Services
 import { setCookie } from '../../../utils/cookies'
 
 
@@ -10,7 +11,6 @@ type Data = {
   data?: Object
   error?: any
 }
-
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await connect()

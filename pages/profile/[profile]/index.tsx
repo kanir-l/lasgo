@@ -1,7 +1,8 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import React, { useState } from 'react'
 import router from 'next/router'
 import Link from 'next/link'
+import React from 'react'
+// Pages
 import Error from '../../_error'
 // Components
 import Header from '../../../components/Header'
@@ -17,7 +18,10 @@ import {
     updateProfileWithImage
 } from '../../../services/user'
 // Interfaces
-import { AcknowledgementInterface, ProfileInterface } from '../../../interfaces/User'
+import { 
+    AcknowledgementInterface, 
+    ProfileInterface 
+} from '../../../interfaces/User'
 // Styles
 import styles from '../../../styles/Home.module.css'
 
@@ -82,8 +86,13 @@ const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
         <div className={styles.profilepagecontainer}>
             <Header currentUser={currentUser}/>
             
-            <Profile profile={user} currentUser={currentUser} removeProfile={deleteUser} uploadImage={updateImage}/>
-           
+            <Profile 
+                profile={user} 
+                currentUser={currentUser} 
+                removeProfile={deleteUser} 
+                uploadImage={updateImage}
+            />
+            
             <div className={styles.topiccontainer}>
                 <ul>
                     <li>
@@ -98,6 +107,7 @@ const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
                     </li>
                 </ul>
             </div> 
+            
             <div className={styles.acknowledgements}>
                 <Acknowledgements 
                     user={user}
