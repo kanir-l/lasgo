@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import React, { useState } from 'react'
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
+import React, { useState } from 'react'
 // Components
 import Header from '../../../../components/Header'
 import Profile from '../../../../components/Profile'
@@ -14,15 +14,17 @@ import {
     deleteChallengeById, 
     deleteUserProfile, 
     readAllAcknowledgements, 
-    renderProfileByUserName 
+    renderProfileByUserName, 
+    updateProfileWithImage
 } from '../../../../services/user'
 // Interfaces
-import { AcknowledgementInterface, ProfileInterface } from '../../../../interfaces/User'
+import { 
+    AcknowledgementInterface, 
+    ProfileInterface 
+} from '../../../../interfaces/User'
 import { Error } from '../../../../interfaces/Error'
 // Styles
 import styles from '../../../../styles/Home.module.css'
-import Acknowledgements from '../../../../components/Acknowledgements'
-
 
 
 interface Props {
@@ -45,11 +47,21 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile, allAcknowled
         challengeThat: { message: "" }
     })
 
-    // Profile
+    // Profile - Delete the profile
     const deleteUser = async (userId: number) => {
         try {
             await deleteUserProfile(userId)
             router.push('/')
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+    // Profile - Update with image
+    const updateImage = async (file: File) => {
+        try {
+            await updateProfileWithImage(file, currentUser.id)
+            router.push(`/profile/${user.userName}`)
         }
         catch (error) {
             console.log(error)
@@ -111,7 +123,12 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile, allAcknowled
         <div className={styles.profilepagecontainer}>
             <Header currentUser={currentUser}/>
 
-            <Profile profile={user} currentUser={currentUser} removeProfile={deleteUser}/>
+            <Profile 
+                profile={user} 
+                currentUser={currentUser} 
+                removeProfile={deleteUser} 
+                uploadImage={updateImage}
+            />
            
             <div className={styles.topiccontainer}>
                 <ul>
@@ -133,9 +150,8 @@ const user: NextPage<Props> = ({ user, currentUser, currentProfile, allAcknowled
             </div> 
 
             <div className={styles.challenges}>
-                {currentUser.userName === user.userName ? 
-                    <InputChallenges addChallenge={createChallenge} error={errors}/> :
-                    null
+                {currentUser.userName === user.userName && 
+                    <InputChallenges addChallenge={createChallenge} error={errors}/> 
                 }
                 <Challenges 
                     user={user}

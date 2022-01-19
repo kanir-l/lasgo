@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import React, { useState } from 'react'
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
+import React from 'react'
 // Components
 import Header from '../../../../components/Header'
 import Profile from '../../../../components/Profile'
@@ -12,11 +12,14 @@ import {
     deleteUserProfile, 
     readAllAcknowledgements, 
     renderProfileByUserName, 
-    updateAcknowledgementByIdWithNewPick
+    updateAcknowledgementByIdWithNewPick,
+    updateProfileWithImage
 } from '../../../../services/user'
 // Interfaces
-import { Error } from '../../../../interfaces/Error'
-import { AcknowledgementInterface, ProfileInterface } from '../../../../interfaces/User'
+import { 
+    AcknowledgementInterface, 
+    ProfileInterface 
+} from '../../../../interfaces/User'
 // Styles
 import styles from '../../../../styles/Home.module.css'
 
@@ -34,11 +37,21 @@ const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter()
 
-    // Profile
+    // Profile - Delete the profile
     const deleteUser = async (userId: number) => {
         try {
             await deleteUserProfile(userId)
             router.push('/')
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+    // Profile - Update with image
+     const updateImage = async (file: File) => {
+        try {
+            await updateProfileWithImage(file, currentUser.id)
+            router.push(`/profile/${user.userName}`)
         }
         catch (error) {
             console.log(error)
@@ -70,7 +83,12 @@ const user: NextPage<Props> = ({ user, currentUser, allAcknowledgements }) => {
         <div className={styles.profilepagecontainer}>
             <Header currentUser={currentUser}/>
 
-            <Profile profile={user} currentUser={currentUser} removeProfile={deleteUser}/>
+            <Profile 
+                profile={user} 
+                currentUser={currentUser} 
+                removeProfile={deleteUser} 
+                uploadImage={updateImage}
+            />
            
             <div className={styles.topiccontainer}>
                 <ul>

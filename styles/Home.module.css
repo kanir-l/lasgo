@@ -8,7 +8,6 @@
   width: 100%;
   min-height: 100vh;
 }
-
 /* Mobile */
 .logodark {
   padding-left: 3em;
@@ -40,7 +39,6 @@
   align-items: center;
   flex-direction: column;
 }
-
 /* Destop */
 @media only screen and (min-width: 768px) {
   .logodark {
@@ -59,7 +57,7 @@
   }
 }
 
-/* Users */
+/* User/Profile */
 .profilepagecontainer {
   background: #ffffff;
   min-height: 100vh;
@@ -131,6 +129,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .errortext {
   color:rgb(255, 255, 255);
   font-size: 1.6rem;

@@ -15,7 +15,7 @@ const AcknowledgementSchema = new Schema({
     }
 })
 
-// Model functions
+// Model function to automatically save when acknowledgment is added by the user
 AcknowledgementSchema.post('save', true, async function(next) {
     const self = this
     try {
@@ -28,7 +28,7 @@ AcknowledgementSchema.post('save', true, async function(next) {
         console.error(error);
     }
 })
-
+// Model function to automatically remove when acknowledgment is deleted by the user
 AcknowledgementSchema.pre('remove', async function(next) {
     const self = this
     try {

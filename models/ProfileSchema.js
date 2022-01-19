@@ -22,6 +22,8 @@ const ProfileSchema = new Schema({
     }]
 })
 
+//TODO : model function, when the uses profile is deleted, the challenges made by the user and the acknowledgements with this challenges will also be removed!
+
 const ProfileModel = mongoose.models.profile || mongoose.model('profile', ProfileSchema)
 
 module.exports = ProfileModel;

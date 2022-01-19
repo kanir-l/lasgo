@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import React, { useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 import router from 'next/router'
+import React, { useState } from 'react'
 // Components
 import SignupForm from '../../components/SignupForm'
 // Services

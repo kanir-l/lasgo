@@ -26,8 +26,8 @@ const Header: FC<Props> = ( {currentUser} ) => {
     }
 
     return (
-        <div className={style.header}>
-            <div className={style.logolight} data-testid="header">
+        <div className={style.header} data-testid="header">
+            <div className={style.logolight}>
                 <Link href={`/profile/${currentUser.userName}`} passHref>
                     <a>
                         <Image src="/Lasgo-light.png" alt="Logo" width="145" height="60" />
