@@ -13,7 +13,7 @@ interface Props {
         userName: string
     },
     removeProfile(profileId: number): void
-    uploadImage(file: File): void
+    uploadImage(file: File & any): void
 }
 
 const Profile: FC<Props> = ( {profile, currentUser, removeProfile, uploadImage} ) => {
@@ -25,11 +25,11 @@ const Profile: FC<Props> = ( {profile, currentUser, removeProfile, uploadImage} 
     // Update profile by adding image
     const [file, setFile] = useState( "" )
     const [hide, setHide] = useState( true )
-    const handleImage = (e: SyntheticEvent) => {
+    const handleImage = (e: any) => {
         setFile(e.target.files[0])
         setHide(false)
     }
-    const submitImage = (e: SyntheticEvent) => {
+    const submitImage = (e: any) => {
         e.preventDefault()
         uploadImage(file)
     } 
