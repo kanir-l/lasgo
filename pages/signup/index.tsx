@@ -1,18 +1,43 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
+import router from 'next/router'
+import React, { useState } from 'react'
 // Components
 import SignupForm from '../../components/SignupForm'
-import Button from '../../components/Button'
+// Services
+import { createProfileFromSignUp } from '../../services/user'
 // Styles
 import styles from '../../styles/Home.module.css'
 
 
 const Signup: NextPage = () => {
-    const createUser = (firstName: string, lastName: string, userName: string, email: string, password: string) => {
-        console.log(firstName, lastName, userName, email, password)
+    const [errors, setErrors] = useState({
+        firstName: { message: "" },
+        lastName: { message: "" },
+        userName: { message: "" },
+        email: { message: "" },
+        password: { message: "" }
+    })
+
+    const createUser = async (firstName: string, lastName: string, userName: string, email: string, password: string, accountCreated: Date) => {
+        try {
+            const signUp = await createProfileFromSignUp(firstName, lastName, userName, email, password, accountCreated)
+            if(signUp?.ok) {
+                router.push(`/login`)
+            } else {
+                if(signUp){
+                    const response = await signUp.json();
+                    setErrors(response.error.errors)
+                } else {
+                    throw "Something went wrong that we couldn't recover from."
+                }
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -25,12 +50,13 @@ const Signup: NextPage = () => {
 
             <div className={styles.logodark}>
                 <Link href="/" passHref>
-                    <Image src="/Lasgo-dark.png" alt="Logo" width="185"
-                    height="78" />
+                    <a>
+                        <Image src="/Lasgo-dark.png" alt="Logo" width="185" height="78" />
+                    </a>
                 </Link>
             </div>
             <div className={styles.homecontainer}>
-                <SignupForm formDetails={createUser}/>
+                <SignupForm addForm={createUser} errors={errors} />
             </div>
         </div>
     )

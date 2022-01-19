@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Lily+Script+One&family=Work+Sans:wght@100;200;400&display=swap');
+
+/* Mobile */
+.challenges {
+  display: flex;
+  justify-content: space-between;
+
+    .info {
+        width: 75%;
+        margin: 1em 0em;
+
+        .this, .that {
+            font-family: 'Work Sans', sans-serif;
+            width: auto;
+            height: 2.81em;
+            padding: 0 2em;
+            font-size: 1rem;
+            color: rgb(205, 138, 75);
+            background: rgb(255, 255, 255);
+            border: solid 1px rgb(205, 138, 75);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            
+        }
+
+        .this:hover, .that:hover{
+            color: rgb(255, 255, 255);
+            background: rgb(221, 177, 135);
+            border: 1px solid rgb(255, 255, 255);
+            outline: 1px solid rgb(205, 138, 75);
+        }
+
+        .this:active, .that:active {
+            top: 0.1em;
+            transition: all 0.3s;
+        }
+
+        .picked {
+            font-family: 'Work Sans', sans-serif;
+            width: auto;
+            height: 2.81em;
+            padding: 0 2em;
+            font-size: 1rem;
+            color: rgb(255, 255, 255);
+            background: rgb(205, 138, 75);
+            border: solid 1px rgb(205, 138, 75);
+            border-radius: 6px;
+        }
+
+        .line {
+            visibility: hidden;
+            line-height: 00.6rem;
+            margin: 0;
+        }
+    }
+    .button {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .byuser {
+        width: 13%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+    
+        p {
+            font-size: 0.75rem;
+            line-height: 0.6rem;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        i {
+            font-size: 0.75rem;
+            color: rgb(201, 201, 201);
+            line-height: 1.3rem;
+        }
+    }
+}
+/* Destop */
+@media only screen and (min-width: 768px) { 
+    .challenges {
+        .info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .line {
+                visibility: visible;
+                display: inline-block;
+                margin: 0 1.88em;
+                color: rgb(201, 201, 201);
+            }
+        } 
+    }
+}
+
+// InputChallenges
+/* Mobile */
+.thisandthat {
+    display: flex;
+   
+    .form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 1.88em 0em;
+
+        .line {
+            visibility: hidden;
+            margin: 0;
+        }
+
+        .input {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1rem;
+            color: rgb(0, 0, 0);
+            background-color: transparent;
+            border: 1px solid rgb(201, 201, 201);
+            border-radius: 6px;
+            display: block;
+            width: 13.13em;
+            height: 2.81em;
+            padding: 0 2em;
+        }
+    
+        .input::placeholder {
+            color: rgb(201, 201, 201);
+        }
+    }
+
+    .button {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .byuser {
+        margin: auto;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+/* Destop */
+@media only screen and (min-width: 768px) { 
+    .thisandthat {
+        display: flex;
+       
+        .form {
+            flex-direction: row;
+            align-items: center;
+
+            .line {
+                visibility: visible;
+                display: inline-block;
+                margin: 0 1.88em;
+                color: rgb(201, 201, 201);
+            }
+        }
+    }
+} 
+
+.picked {
+    color: black;
+}
+
+
+

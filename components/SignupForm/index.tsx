@@ -1,26 +1,35 @@
 import React, { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 // Interfaces
-import { userContacts } from '../../interfaces/contacts'
+import { SignUpInterface } from '../../interfaces/User'
 // Styles
 import style from './signupform.module.scss'
 
 interface Props {
-    formDetails(
+    addForm(
         firstName: string,
         lastName: string,
         userName: string,
         email: string,
-        password: string
+        password: string,
+        accountCreated: Date
     ): void
+    errors: {
+        firstName: { message: string },
+        lastName: { message: string },
+        userName: { message: string },
+        email: { message: string },
+        password: { message: string }
+    }
 }
 
-const SignupForm: FC<Props> = ({ formDetails }) => {
-    const [form, setForm] = useState<userContacts>({
+const SignupForm: FC<Props> = ( {addForm, errors} ) => {
+    const [form, setForm] = useState<SignUpInterface>({
         firstName: "",
         lastName: "",
         userName: "",
         email: "",
-        password: ""
+        password: "",
+        accountCreated: new Date()
     })
 
     const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,11 +39,11 @@ const SignupForm: FC<Props> = ({ formDetails }) => {
 
     const saveInputs = (e: FormEvent) => {
         e.preventDefault()
-        formDetails(form.firstName, form.lastName, form.userName, form.email, form.password)
+        addForm(form.firstName, form.lastName, form.userName, form.email, form.password, new Date())
     }
  
     return (
-        <div className={style.container}>
+        <div className={style.signup}>
             <div className={style.h1}>Sign up</div>
             <form className={style.form} onSubmit={saveInputs}>
                 <input 
@@ -48,6 +57,7 @@ const SignupForm: FC<Props> = ({ formDetails }) => {
                     onChange={handleInputs}
                     name="firstName"
                 />
+                {errors.firstName && <p className='error'>{errors.firstName.message}</p>}
                 <input 
                     className={style.input}
                     id="lastname" 
@@ -59,6 +69,7 @@ const SignupForm: FC<Props> = ({ formDetails }) => {
                     onChange={handleInputs}
                     name="lastName"
                 />
+                {errors.lastName && <p className='error'>{errors.lastName.message}</p>}
                 <input 
                     className={style.input}
                     id="username" 
@@ -70,6 +81,7 @@ const SignupForm: FC<Props> = ({ formDetails }) => {
                     onChange={handleInputs}
                     name="userName"
                 />
+                {errors.userName && <p className='error'>{errors.userName.message}</p>}
                 <input 
                     className={style.input}
                     id="email" 
@@ -81,10 +93,11 @@ const SignupForm: FC<Props> = ({ formDetails }) => {
                     onChange={handleInputs}
                     name="email"
                 />
+                {errors.email && <p className='error'>{errors.email.message}</p>}
                 <input 
                     className={style.input}
                     id="password" 
-                    type="text" 
+                    type="password" 
                     autoComplete="name" 
                     required 
                     placeholder="Password"
@@ -92,6 +105,7 @@ const SignupForm: FC<Props> = ({ formDetails }) => {
                     onChange={handleInputs}
                     name="password"
                 />
+                {errors.password && <p className='error'>{errors.password.message}</p>}
                 <button className={style.button} type="submit" onClick={saveInputs}>Register</button>
             </form>
          </div>

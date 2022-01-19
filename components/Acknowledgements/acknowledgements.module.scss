@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Lily+Script+One&family=Work+Sans:wght@100;200;400&display=swap');
+
+.acknowledgements {
+    display: flex;
+    justify-content: space-between;
+
+    .info {
+        width: 75%;
+        margin: 1em 0em;
+
+        .myThis, .myThat {
+            font-family: 'Work Sans', sans-serif;
+            width: auto;
+            height: 2.81em;
+            padding: 0 2em;
+            font-size: 1rem;
+            color: rgb(0, 111, 96);
+            background: rgb(255, 255, 255);
+            border: solid 1px rgb(0, 111, 96);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .myThis:hover, .myThat:hover{
+            color: rgb(255, 255, 255);
+            background: rgb(0, 62, 54);
+            border: 1px solid rgb(255, 255, 255);
+            outline: 1px solid rgb(0, 111, 96);
+        }
+
+        .myThis:active, .myThis:active {
+            top: 0.1em;
+            transition: all 0.3s;
+        }
+
+        .myPicked {
+            font-family: 'Work Sans', sans-serif;
+            width: auto;
+            height: 2.81em;
+            padding: 0 2em;
+            font-size: 1rem;
+            color: rgb(255, 255, 255);
+            background: rgb(0, 111, 96);
+            border: solid 1px rgb(0, 111, 96);
+            border-radius: 6px;
+        }
+        //Ohter Profiles
+        .this, .that {
+            font-family: 'Work Sans', sans-serif;
+            width: auto;
+            height: 2.81em;
+            padding: 0 2em;
+            font-size: 1rem;
+            color: rgb(255, 255, 255);
+            background: rgb(209, 209, 209);
+            border: solid 1px rgb(209, 209, 209);
+            border-radius: 5px;
+        }
+
+        .picked {
+            font-family: 'Work Sans', sans-serif;
+            width: auto;
+            height: 2.81em;
+            padding: 0 2em;
+            font-size: 1rem;
+            color: rgb(255, 255, 255);
+            background: rgb(0, 111, 96);
+            border: solid 1px rgb(0, 111, 96);
+            border-radius: 6px;
+        }
+
+        .line {
+            visibility: hidden;
+            margin: 0;
+            line-height: 00.6rem;
+        }
+    }
+
+    .button {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .byuser {
+        width: 12%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        
+        p {
+            font-size: 0.75rem;
+            color: rgb(201, 201, 201);
+            line-height: 0.6rem;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        i {
+            font-size: 0.75rem;
+            color: rgb(201, 201, 201);
+            line-height: 1.3rem;
+        }
+    }
+}
+/* Destop */
+@media only screen and (min-width: 768px) { 
+    .acknowledgements {
+        .info {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .line {
+                visibility: visible;
+                display: inline-block;
+                margin: 0 1.88em;
+                color: rgb(201, 201, 201);
+            }
+        } 
+    }
+}
