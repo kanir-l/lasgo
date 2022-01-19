@@ -2,7 +2,7 @@
 
 /* Welcome, signup/login */
 .pagecontainer {
-  background-image: url("../public/homebackground.png");
+  background-image: url("/homebackground.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
