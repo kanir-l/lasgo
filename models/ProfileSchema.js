@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 mongoose.Promis = global.Promise
+const AcknowledgementModel = require('./AcknowledgementSchema')
+const ChallengeModel = require('./ChallengeSchema')
 
 const ProfileSchema = new Schema({
     firstName: { type: String, required: true, minlength: 2, maxlength: 20 },
@@ -22,7 +24,26 @@ const ProfileSchema = new Schema({
     }]
 })
 
-//TODO : model function, when the uses profile is deleted, the challenges made by the user and the acknowledgements with this challenges will also be removed!
+// Model function to automatically remove the challenges and acknowledgements made by this profile id when this profile id is deleted
+ProfileSchema.pre('remove', async function(next) {
+    const self = this
+    try {
+        await ChallengeModel.deleteMany(
+            { byUser: self._id },
+            next
+        ).clone()
+    } catch (error) {
+        console.log(error)
+    } 
+    try {
+        await AcknowledgementModel.deleteMany(
+            { by: self._id },
+            next
+        ).clone()
+    } catch (error) {
+        console.log(error)
+    } 
+})
 
 const ProfileModel = mongoose.models.profile || mongoose.model('profile', ProfileSchema)
 
