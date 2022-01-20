@@ -4,6 +4,7 @@ mongoose.Promis = global.Promise
 const ProfileModel = require('./ProfileSchema')
 const AcknowledgementModel = require('./AcknowledgementSchema')
 
+
 const ChallengeSchema = new Schema({
     challengeThis: { type: String, minlength: 2, maxlength: 30 },
     challengeThat: { type: String, minlength: 2, maxlength: 30 },
@@ -14,11 +15,12 @@ const ChallengeSchema = new Schema({
     }
 })
 
-// Model function to automatically save when the challenge is created byUser
+// Model function to automatically save in the profile when this challenge is created byUserId
 ChallengeSchema.post('save', true, async function(next) {
     const self = this
     try {
-        await ProfileModel.updateOne(
+        // Changed from ProfileModel to models.profile - caused by circular dependenies
+        await mongoose.models.profile.updateOne(
             { _id: self.byUser },
             { $push: { myChallenges: self._id } },
             next
@@ -27,11 +29,12 @@ ChallengeSchema.post('save', true, async function(next) {
         console.error(error);
     }
 })
-// Model function to automatically remove when the challenge is created byUser
+// Model function to automatically remove from the profile when this challenge is removed 
 ChallengeSchema.pre('remove', async function(next) {
     const self = this
     try {
-        await ProfileModel.updateMany(
+        // Changed from ProfileModel to models.profile - caused by circular dependenies
+        await mongoose.models.profile.updateMany(
             { $or: [
                 { myChallenges: self._id },
                 { myAcknowledgements: self._id },
@@ -47,7 +50,7 @@ ChallengeSchema.pre('remove', async function(next) {
         console.error(error)
     }
 })
-
+// Model function to automatically remove from the profile when this acknowledgement is removed 
 ChallengeSchema.pre('remove', async function(next) {
     const self = this
     try {

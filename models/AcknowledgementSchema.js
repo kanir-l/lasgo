@@ -3,6 +3,7 @@ const { Schema } = mongoose
 mongoose.Promis = global.Promise
 const ProfileModel = require('./ProfileSchema')
 
+
 const AcknowledgementSchema = new Schema({
     challenge: {
         type: mongoose.Schema.Types.ObjectId,
@@ -15,11 +16,12 @@ const AcknowledgementSchema = new Schema({
     }
 })
 
-// Model function to automatically save when acknowledgment is added by the user
+// Model function to automatically save in the profile when acknowledgment is picked by the user
 AcknowledgementSchema.post('save', true, async function(next) {
     const self = this
     try {
-        await ProfileModel.updateOne(
+        // Changed from ProfileModel to models.profile - caused by circular dependenies
+        await mongoose.models.profile.updateOne(
             { _id: self.by },
             { $push: { myAcknowledgements: self._id } },
             next
@@ -28,11 +30,12 @@ AcknowledgementSchema.post('save', true, async function(next) {
         console.error(error);
     }
 })
-// Model function to automatically remove when acknowledgment is deleted by the user
+// Model function to automatically remove from the profile when acknowledgment is removed 
 AcknowledgementSchema.pre('remove', async function(next) {
     const self = this
     try {
-        await ProfileModel.updateMany(
+        // Changed from ProfileModel to models.profile - caused by circular dependenies 
+        await mongoose.models.profile.updateMany(
             { $or: [
                 { myAcknowledgements: self._id },
             ]},

@@ -39,7 +39,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                 path: 'byUser', 
                 model: ProfileModel
               }
-            })
+            }
+          )
         res.status(200).json( {data: getAcknowledgements} )
       } 
       catch (error) {
